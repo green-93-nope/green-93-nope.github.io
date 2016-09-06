@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Summer is Green</title>
+  <subtitle>a blog for writing and thinking</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://summerisgreen.com/"/>
+  <updated>2016-09-06T10:05:56.062Z</updated>
+  <id>http://summerisgreen.com/</id>
+  
+  <author>
+    <name>Green</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>转投Archlinux</title>
+    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
+    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-转投archlinux.html</id>
+    <published>2016-09-05T16:00:00.000Z</published>
+    <updated>2016-09-06T10:05:56.062Z</updated>
+    
+    <content type="html"><![CDATA[
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">为什么选择archlinux?</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+在linux众多的发行版中， 除了arch外我之前还用过 opensuse 和 ubuntu这两款系统。这两款发行版可以说是在linux世界中极其出名的， 而且不管是它们的易用性还是制作的精良度在linux的发行版中也都是名列前矛的。但是尽管它们如此优秀，它们还是有一些缺点让我难以忍受， 最终做出了弃用的选择。
+</p>
+
+<p>
+产于德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但永久了之后你就会发现它也有很多缺点让你无法忍受：
+</p>
+<ol class="org-ol">
+<li>由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都会被它的慢性子给急死。</li>
+<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样竟然还出现了python-matplotlib这个使用应该非常多的包出现了打包错误无法使用这种情况。。。</li>
+<li>opensuse采用的kde桌面虽然是非常华丽， 但是bug率也是让人无法忍受, 时常会出现桌面崩溃的情况， 这对于作为日常工作使用的系统来说可以说是致命的缺陷。也正因此我继而选择改用ubuntu。</li>
+</ol>
+
+<p>
+ubuntu可以说是当前linux世界最为流行的发行版了， 它的优点也是让你用了就很容易感受出（比如开箱即用，强大的包管理等），并继而产生一定的依赖性。 作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。不过这个开箱即用的设计理念也对想要尝试自己DRY的人带来很多的问题。如果你想要尝试一些轻量级的桌面环境的话，你会发现自己要解决大量的和ubuntu unity之间的冲突。如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有几个无法解决，搜索引擎也找不到有用的解决方案。在这种时候一个想要自己配置一个简洁而又能极大提高生产力的系统的我，又再次选择更换操作系统。
+</p>
+
+<p>
+这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想主要有下面几点：
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">简洁</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<p>
+arch的哲学是Keep It Simple, Stupid。所以在初始安装时它只会安装一个无图像界面的基本系统。这也给arch用户极大的自由度以根据自己的考量或喜爱来DRY出自己的系统。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">包管理</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<p>
+arch有着极其强大的包管理工具pacman，它的输出简单易懂而且十分规范，非常方便后期的解析。如果你仔细看过pacman的官方wiki，你就会发现如此惊艳的获取来自官方源的软件包并重新安装的命令：
+</p>
+
+<pre class="example">
+comm -23 &lt;(pacman -Qeq|sort) &lt;(pacman -Qmq|sort) &gt; pkglist
+sudo pacman -S $(&lt; pkglist)
+</pre>
+
+<p>
+arch的官方软件仓库中的软件已经足够丰富了，具有一定用户量的软件都会有。如果你要用的确实是一些非常冷门的软件而在官方仓库中无法找到，那就试一下AUR仓库，你有很大的可能会满意而归。这是一个由用户者们自行管理的软件仓库，拥有非常丰富的软件资源，而且它的软件包管理也极其方便有 yaourt这种和pacman命令参数兼容的工具来提供管理服务。
+</p>
+
+<p>
+arch的包管理还有一个很强大的优势就是镜像源多，更新速度极其快。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Wiki</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<p>
+arch还有一个对其他发行版的巨大优势就是极其非常完善的wiki，从系统的安装到应用的使用配置都有大量的wiki来进行指导，这也是为什么archlinux并不容易上手，但却有着庞大用户量的一个原因吧。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">arch之旅</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+<p>
+说到这，可能你对arch会开始感兴趣。不过如果要你使用它，你还是有一些抵触，因为你可能听说：
+</p>
+
+<p>
+Q1: archlinux很难安装， 不是那种很爱折腾的人最好不要使用。
+</p>
+
+<p>
+A1: archlinux的安装虽然不像ubuntu那样傻瓜式的简单， 但只要你按照官方的<a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank" rel="external">安装wiki</a> 的步骤一步步来，也并不难，只是需要点耐心了。当然如果你是和我一样的windows双系统使用者, 你还需要在安装启动引导前安装os-prober即可。
+</p>
+
+<p>
+Q2: archlinux是滚动升级版本并且很容易滚挂。
+</p>
+
+<p>
+A2: archlinux是滚动更新的， 如果用户平时不注意维护是很容易滚挂的，但是如果你是一个有心人，平时注意定期<a href="https://wiki.archlinux.org/index.php/System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="external">维护</a> 和<a href="https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" target="_blank" rel="external">备份</a> ，并且在你每次更新系统前留意<a href="https://www.archlinux.org/feeds/news/" target="_blank" rel="external">archlinux新闻</a> 的话, 并不需要担心滚挂的问题。网上也有很多人，安装了一次后可以用上很多年，比ubuntu LTS版用的还长。
+</p>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      
+&lt;div id=&quot;outline-container-orgheadline1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgheadline1&quot;&gt;为什么选择archlinux?&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text
+    
+    </summary>
+    
+      <category term="archlinux" scheme="http://summerisgreen.com/categories/archlinux/"/>
+    
+    
+      <category term="archlinux" scheme="http://summerisgreen.com/tags/archlinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>简单的决策方法</title>
+    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%B3%E7%AD%96%E6%96%B9%E6%B3%95.html"/>
+    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-简单的决策方法.html</id>
+    <published>2016-09-05T16:00:00.000Z</published>
+    <updated>2016-09-06T08:47:58.859Z</updated>
+    
+    <content type="html"><![CDATA[<p>
+之前就觉得自己的决策好多都是凭感觉来做的，缺乏理性的计算。后来想要改善自己的决策方法，却又因为缺少有效的指导而没有进展。正好最近看的coursera上的model thinking课程中介绍了三个决策模型，觉得虽然原理简单但却十分实用，所以特地整理了下。
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">多标准决策模型：</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+下面以买房作为例子，来给大家看看这种方法具体该如何操作吧：
+</p>
+
+<p>
+假设想要买房的你最终决定在一号房和二号房中选择一个，而你对房子的评价指标主要有面积，位置和环境这三个指标，其中相比面积，你更加看重房子的位置和环境。通过你获得的信息，绘制出下面的表格之后，很容易发现二号房的得分比一号房的高，因此你决定选择一号房。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+
+<colgroup>
+<col class="org-left">
+
+<col class="org-right">
+
+<col class="org-left">
+
+<col class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">标准</th>
+<th scope="col" class="org-right">权重</th>
+<th scope="col" class="org-left">一号房</th>
+<th scope="col" class="org-right">二号房</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">面积</td>
+<td class="org-right">1</td>
+<td class="org-left">150(*)</td>
+<td class="org-right">100</td>
+</tr>
+
+<tr>
+<td class="org-left">位置</td>
+<td class="org-right">2</td>
+<td class="org-left">*</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">环境</td>
+<td class="org-right">2</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">*</td>
+</tr>
+
+<tr>
+<td class="org-left">总计</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">3</td>
+<td class="org-right">2</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+其实这就是我们经常会听说的量表评估方法。这种方法看上去简单易操作，但是在权重值的选取上可能还是值得商榷的。比如在上例中，假如我确实更看重房子的位置而不是面积的化，它们之间的关系为什么就一定是两倍而不是三倍或者四倍呢。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">空间选择模型</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<p>
+空间选择模型针对的是像喜欢偏淡的还是偏辣的这种在一定范围内进行选择的个人口味类的决策问题。就像在下面这种情况下，你就会选择去和你口味更接近的一号餐厅而不是口味过重的二号餐厅。
+</p>
+
+<p>
+<img src="/img/20160901spatialchoice.png" alt="去哪个餐厅">
+</p>
+
+<p>
+空间选择模型既可以单独使用，也用于在前面所介绍的多标准决策模型中某个标准的决策。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">决策树模型</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+</div><div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">进行决策</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<p>
+决策树模型主要是用于涉及概率的这种不确定情况的场合。它的原理就是根据概率计算获得数学期望以进行比较。应用过程十分简单，分为下面的三个步骤：1.画出决策树; 2.写下收益支出以及每个不确定情况发生的概率。3.使用回朔法求解。在这种方法中，作图计算十分重要，我们通过下面的例子来体会一下：
+</p>
+
+<p>
+假设你突然想去参观一个展览，你查了下票务信息发现现在只有两种票在卖：
+价格为$200的下午三点的票，和价格为$400的下午四点的票。但是因为展览是在另一座城市，你需要坐火车过去。你看了下时间，发现如果去看下午三点的展览的话，时间很紧，有百分之四十的可能性赶不上那班火车。如果你今天一定要去看的话你该选哪种票呢？
+</p>
+
+<p>
+在这个问题中涉及到了不确定的情况，所以可以使用决策树模型来进行求解。比如画出了决策树之后可以使用回朔法很容易的解出如果买下午三点的票的期望价格（黄色方框处）为$360。小于买下午四点的票的期望价格($400)。所以如果你是一个理性的经济人的话，就会购买下午三点的票。
+</p>
+
+<p>
+<img src="/img/20160901decisiontree.png" alt="买几点的票？">
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">估计信息的价值</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<p>
+决策树模型还有一个应用就是评估信息的价值。比如在上例中如果某个有未卜先知的能力的人知道你会不会赶上三点票的那班火车。如果你想要跟他购买这个信息，你愿意出多少钱？
+虽然估计信息的价值这个问题，看上去会比较深奥，但是应用决策树模型的解决方案却十分简单，只需要下面的三个步骤即可：1.计算没有信息情况下的期望价格。2.计算含有信息的情况下的期望价格。3.计算它们之间的差额即是信息的价值。这种方法我们可以通过一个买车还是租车的例子来体会一下：
+</p>
+
+<p>
+假设你发现没有车出门不方便，因此准备去弄辆车。通过一些了解，你发现你有两种选择：一种是直接买车;一种是花一个月$500的价格租车。从长久来看可能是直接买车好，但你经过一番调研发现如果你租车的话，汽车公司会有百分之四十的机会下个月给你返回$1000的钱。你会选择买车还是租车？如果有人有汽车公司关于是否返现的内部消息，你觉得这个信息值多少钱？
+</p>
+
+<p>
+对于第一个问题，我们很容易通过之前的方法计算出租车和买车的期望价格分别为-$100和$0，因此最佳的选择应该是买车，付出价格(value_without_info)为$0。
+</p>
+
+<p>
+<img src="/img/20160901valuewithoutinfo.png" alt="买车还是租车">
+</p>
+
+<p>
+为了回答第二个问题，还需要计算如果有这个信息的情况下的付出价格。有信息的情况下的付出价格和无信息情况下的不同，因为汽车公司有无现金的返回是可以在实际做出租车还是买车的决策之前获得的信息。
+</p>
+
+<p>
+<img src="/img/20160901valuewithinfo.png" alt="知道返现信息的情况下的期望付出价格">
+</p>
+
+<p>
+在结合了汽车公司返现的可能性之后，可以通过下式得到有信息的情况下的付出价格为两百美元:
+</p>
+
+<p>
+value_with_info = 500 * 0.4 + 0 * 0.6 = $200
+</p>
+
+<p>
+最后我们就可以作差计算得出信息的价值为两百美元（具体计算过程如下）。
+</p>
+
+<p>
+value_of_info = value_with_info - value_without_info = $200
+</p>
+
+<p>
+*
+</p>
+
+<p>
+<a id="more"></a>
+</p>
+</div>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+之前就觉得自己的决策好多都是凭感觉来做的，缺乏理性的计算。后来想要改善自己的决策方法，却又因为缺少有效的指导而没有进展。正好最近看的coursera上的model thinking课程中介绍了三个决策模型，觉得虽然原理简单但却十分实用，所以特地整理了下。
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-orgheadline1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgheadline1&quot;&gt;多标准决策模型：&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgheadline1&quot;&gt;
+&lt;p&gt;
+下面以买房作为例子，来给大家看看这种方法具体该如何操作吧：
+&lt;/p&gt;
+
+&lt;p&gt;
+假设想要买房的你最终决定在一号房和二号房中选择一个，而你对房子的评价指标主要有面积，位置和环境这三个指标，其中相比面积，你更加看重房子的位置和环境。通过你获得的信息，绘制出下面的表格之后，很容易发现二号房的得分比一号房的高，因此你决定选择一号房。
+&lt;/p&gt;
+
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;all&quot; frame=&quot;border&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;org-left&quot; /&gt;
+
+&lt;col  class=&quot;org-right&quot; /&gt;
+
+&lt;col  class=&quot;org-left&quot; /&gt;
+
+&lt;col  class=&quot;org-right&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th scope=&quot;col&quot; class=&quot;org-left&quot;&gt;标准&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;org-right&quot;&gt;权重&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;org-left&quot;&gt;一号房&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;org-right&quot;&gt;二号房&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;org-left&quot;&gt;面积&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;1&lt;/td&gt;
+&lt;td class=&quot;org-left&quot;&gt;150(*)&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;org-left&quot;&gt;位置&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;2&lt;/td&gt;
+&lt;td class=&quot;org-left&quot;&gt;*&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;&amp;#xa0;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;org-left&quot;&gt;环境&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;2&lt;/td&gt;
+&lt;td class=&quot;org-left&quot;&gt;&amp;#xa0;&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;*&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;org-left&quot;&gt;总计&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;&amp;#xa0;&lt;/td&gt;
+&lt;td class=&quot;org-left&quot;&gt;3&lt;/td&gt;
+&lt;td class=&quot;org-right&quot;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;
+其实这就是我们经常会听说的量表评估方法。这种方法看上去简单易操作，但是在权重值的选取上可能还是值得商榷的。比如在上例中，假如我确实更看重房子的位置而不是面积的化，它们之间的关系为什么就一定是两倍而不是三倍或者四倍呢。
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgheadline2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgheadline2&quot;&gt;空间选择模型&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgheadline2&quot;&gt;
+&lt;p&gt;
+空间选择模型针对的是像喜欢偏淡的还是偏辣的这种在一定范围内进行选择的个人口味类的决策问题。就像在下面这种情况下，你就会选择去和你口味更接近的一号餐厅而不是口味过重的二号餐厅。
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;img src=&quot;/img/20160901spatialchoice.png&quot; alt=&quot;去哪个餐厅&quot;/&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+空间选择模型既可以单独使用，也用于在前面所介绍的多标准决策模型中某个标准的决策。
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgheadline5&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgheadline5&quot;&gt;决策树模型&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgheadline5&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-orgheadline3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgheadline3&quot;&gt;进行决策&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgheadline3&quot;&gt;
+&lt;p&gt;
+决策树模型主要是用于涉及概率的这种不确定情况的场合。它的原理就是根据概率计算获得数学期望以进行比较。应用过程十分简单，分为下面的三个步骤：1.画出决策树; 2.写下收益支出以及每个不确定情况发生的概率。3.使用回朔法求解。在这种方法中，作图计算十分重要，我们通过下面的例子来体会一下：
+&lt;/p&gt;
+
+&lt;p&gt;
+假设你突然想去参观一个展览，你查了下票务信息发现现在只有两种票在卖：
+价格为$200的下午三点的票，和价格为$400的下午四点的票。但是因为展览是在另一座城市，你需要坐火车过去。你看了下时间，发现如果去看下午三点的展览的话，时间很紧，有百分之四十的可能性赶不上那班火车。如果你今天一定要去看的话你该选哪种票呢？
+&lt;/p&gt;
+
+&lt;p&gt;
+在这个问题中涉及到了不确定的情况，所以可以使用决策树模型来进行求解。比如画出了决策树之后可以使用回朔法很容易的解出如果买下午三点的票的期望价格（黄色方框处）为$360。小于买下午四点的票的期望价格($400)。所以如果你是一个理性的经济人的话，就会购买下午三点的票。
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;img src=&quot;/img/20160901decisiontree.png&quot; alt=&quot;买几点的票？&quot;/&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgheadline4&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgheadline4&quot;&gt;估计信息的价值&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgheadline4&quot;&gt;
+&lt;p&gt;
+决策树模型还有一个应用就是评估信息的价值。比如在上例中如果某个有未卜先知的能力的人知道你会不会赶上三点票的那班火车。如果你想要跟他购买这个信息，你愿意出多少钱？
+虽然估计信息的价值这个问题，看上去会比较深奥，但是应用决策树模型的解决方案却十分简单，只需要下面的三个步骤即可：1.计算没有信息情况下的期望价格。2.计算含有信息的情况下的期望价格。3.计算它们之间的差额即是信息的价值。这种方法我们可以通过一个买车还是租车的例子来体会一下：
+&lt;/p&gt;
+
+&lt;p&gt;
+假设你发现没有车出门不方便，因此准备去弄辆车。通过一些了解，你发现你有两种选择：一种是直接买车;一种是花一个月$500的价格租车。从长久来看可能是直接买车好，但你经过一番调研发现如果你租车的话，汽车公司会有百分之四十的机会下个月给你返回$1000的钱。你会选择买车还是租车？如果有人有汽车公司关于是否返现的内部消息，你觉得这个信息值多少钱？
+&lt;/p&gt;
+
+&lt;p&gt;
+对于第一个问题，我们很容易通过之前的方法计算出租车和买车的期望价格分别为-$100和$0，因此最佳的选择应该是买车，付出价格(value_without_info)为$0。
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;img src=&quot;/img/20160901valuewithoutinfo.png&quot; alt=&quot;买车还是租车&quot;/&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+为了回答第二个问题，还需要计算如果有这个信息的情况下的付出价格。有信息的情况下的付出价格和无信息情况下的不同，因为汽车公司有无现金的返回是可以在实际做出租车还是买车的决策之前获得的信息。
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;img src=&quot;/img/20160901valuewithinfo.png&quot; alt=&quot;知道返现信息的情况下的期望付出价格&quot;/&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+在结合了汽车公司返现的可能性之后，可以通过下式得到有信息的情况下的付出价格为两百美元:
+&lt;/p&gt;
+
+&lt;p&gt;
+value_with_info = 500 * 0.4 + 0 * 0.6 = $200
+&lt;/p&gt;
+
+&lt;p&gt;
+最后我们就可以作差计算得出信息的价值为两百美元（具体计算过程如下）。
+&lt;/p&gt;
+
+&lt;p&gt;
+value_of_info = value_with_info - value_without_info = $200
+&lt;/p&gt;
+
+&lt;p&gt;
+*
+&lt;/p&gt;
+
+&lt;p&gt;
+    
+    </summary>
+    
+      <category term="思维方式" scheme="http://summerisgreen.com/categories/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
+    
+    
+      <category term="模型" scheme="http://summerisgreen.com/tags/%E6%A8%A1%E5%9E%8B/"/>
+    
+      <category term="思维方式" scheme="http://summerisgreen.com/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
+    
+  </entry>
+  
+</feed>
