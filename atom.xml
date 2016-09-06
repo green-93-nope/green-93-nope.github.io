@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2016-09-06T08:47:58.859Z</updated>
+  <updated>2016-09-06T11:21:43.209Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%B3%E7%AD%96%E6%96%B9%E6%B3%95.html"/>
     <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-简单的决策方法.html</id>
     <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2016-09-06T08:47:58.859Z</updated>
+    <updated>2016-09-06T11:21:43.209Z</updated>
     
     <content type="html"><![CDATA[<p>
 之前就觉得自己的决策好多都是凭感觉来做的，缺乏理性的计算。后来想要改善自己的决策方法，却又因为缺少有效的指导而没有进展。正好最近看的coursera上的model thinking课程中介绍了三个决策模型，觉得虽然原理简单但却十分实用，所以特地整理了下。
@@ -374,7 +374,7 @@ value_of_info = value_with_info - value_without_info = $200
     <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
     <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-转投archlinux.html</id>
     <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2016-09-06T10:05:56.062Z</updated>
+    <updated>2016-09-06T11:21:15.135Z</updated>
     
     <content type="html"><![CDATA[
 <div id="outline-container-orgheadline1" class="outline-2">
@@ -398,7 +398,7 @@ ubuntu可以说是当前linux世界最为流行的发行版了， 它的优点�
 </p>
 
 <p>
-这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想主要有下面几点：
+这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想有下面几点：
 </p>
 </div>
 
