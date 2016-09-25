@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="emacs," />
+  <meta name="keywords" content="archlinux," />
 
 
 
@@ -86,37 +86,43 @@
 
 
 
-<meta name="description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+<meta name="description" content="linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
+本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
+后来经过一番调研，终于找到了一款满意的下载工具&amp;#x2013;aria2。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
+aria2是什么？
+
+
+ar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="配置支持中文输入的emacsclient">
-<meta property="og:url" content="http://summerisgreen.com/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html">
+<meta property="og:title" content="arch下使用aria2下载资源">
+<meta property="og:url" content="http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html">
 <meta property="og:site_name" content="Summer is Green">
-<meta property="og:description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+<meta property="og:description" content="linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
+本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
+后来经过一番调研，终于找到了一款满意的下载工具&amp;#x2013;aria2。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
-<meta property="og:updated_time" content="2016-09-25T07:37:55.968Z">
+aria2是什么？
+
+
+ar">
+<meta property="og:updated_time" content="2016-09-25T07:33:29.232Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="配置支持中文输入的emacsclient">
-<meta name="twitter:description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+<meta name="twitter:title" content="arch下使用aria2下载资源">
+<meta name="twitter:description" content="linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
+本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
+后来经过一番调研，终于找到了一款满意的下载工具&amp;#x2013;aria2。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
+aria2是什么？
+
+
+ar">
 
 
 
@@ -137,9 +143,9 @@
 
 
 
-  <link rel="canonical" href="http://summerisgreen.com/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html"/>
+  <link rel="canonical" href="http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html"/>
 
-  <title> 配置支持中文输入的emacsclient | Summer is Green </title>
+  <title> arch下使用aria2下载资源 | Summer is Green </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -289,7 +295,7 @@
             
             
               
-                配置支持中文输入的emacsclient
+                arch下使用aria2下载资源
               
             
           </h1>
@@ -301,8 +307,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-24T00:00:00+08:00" content="2016-09-24">
-              2016-09-24
+            <time itemprop="dateCreated" datetime="2016-09-25T00:00:00+08:00" content="2016-09-25">
+              2016-09-25
             </time>
           </span>
 
@@ -315,8 +321,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/emacs/" itemprop="url" rel="index">
-                    <span itemprop="name">emacs</span>
+                  <a href="/categories/archlinux/" itemprop="url" rel="index">
+                    <span itemprop="name">archlinux</span>
                   </a>
                 </span>
 
@@ -349,127 +355,142 @@
 
       
         <p>
-因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
-</p>
-
-<p>
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置过程和使用方法。
+linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
+本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
+后来经过一番调研，终于找到了一款满意的下载工具&#x2013;aria2。
 </p>
 
 <div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1">emacsclient</h2>
+<h2 id="orgheadline1">aria2是什么？</h2>
 <div class="outline-text-2" id="text-orgheadline1">
 <p>
-emacsclient的原理十分简单，就是先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
-这样就免去了最耗时的每次启动时的加载配置，十分快速的同时还拥有你自定义的配置。
+aria2是一款轻量级的、支持多协议的和多个下载源的下载工具，支持HTTP/HTTPS，FTP，SFTP，BitTorrent以及Metalink等协议的下载。
+具体介绍可参照<a href="https://aria2.github.io/" target="_blank" rel="external">aria2官网</a>。
 </p>
 
 <p>
-对于emacs英文用户来说，在终端下直接运行如下命令即可打开终端下的或者带有图形界面的emacs客户端。
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-bash">$ emacsclient -t -a <span style="color: #2aa198;">""</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
-$ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
-</pre>
-</div>
-<p>
-其中-a ""参数表示，当第一次运行这个命令时，它会把emacs当作守护进程来启动，之后就会一直驻留在后台。
-等到再次使用emacsclient时，就会把新建的窗口链接到该守护程序实现快速启动。
+我想在这里说一下它的两个非常惊艳的优点：一个是轻量级：占用内存空间十分少，通常只占用4-9MB。
+另一个优势就是支持RPC界面远程控制，可以很方便的对被配置为服务器的主机进行下载管理。
 </p>
 
 <p>
-但是对于中文用户，进入后就会发现中文乱码，而且fcitx输入法无法被激活。因此需要一些额外的配置来支持中文的显示及中文输入法的使用。
+体会到了aria2的强大了之后，就来看看正确安装并配置aria2。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2">新窗口中支持中文字体</h2>
-<div class="outline-text-2" id="text-orgheadline2">
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6">aria2的安装及配置</h2>
+<div class="outline-text-2" id="text-orgheadline6">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">安装aria2</h3>
+<div class="outline-text-3" id="text-orgheadline2">
 <p>
-因为在emacs中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
-所以emacsclient中的中文字体需要下面的配置来额外进行设置。
+由于aria2已经在archlinux的官方仓库中，所以安装十分方便，直接在命令行中使用pacman包管理工具进行安装即可:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-emacs">(setq window-system-default-frame-alist
-      '(
-        ;; if frame created on x display
-        (x
-         (menu-bar-lines . 1)
-         (tool-bar-lines . nil)
-         ;; mouse
-         (mouse-wheel-mode . 1)
-         (mouse-wheel-follow-mouse . t)
-         (mouse-avoidance-mode . 'exile)
-         ;; face 具体可以更换为系统支持的中文字体
-         (font . "WenQuanYi Micro Hei Mono 12")
-         )
-        ;; if on term
-        (nil
-         (menu-bar-lines . 0) (tool-bar-lines . 0)
-         ;; (background-color . "black")
-         ;; (foreground-color . "white")
-         )
-        )
-      )
+<pre class="src src-bash">$ sudo pacman -S aria2
 </pre>
 </div>
+
+<p>
+此时已经可以直接通过命令行运行aria2来进行下载，不过并不推荐。
+因为相对于每次都通过命令行参数来对断点续传或者速度限制等功能进行说明的方法来说，有着更好的替代方案&#x2013;使用配置文件启动aria2服务，再通过web图形前端进行管理。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3">用户环境变量配置</h2>
-<div class="outline-text-2" id="text-orgheadline3">
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">配置aria2</h3>
+<div class="outline-text-3" id="text-orgheadline3">
 <p>
-在系统环境中LC_CTYPE默认为英文时，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
-比如启动下面的命令，就可以使用支持fcitx中文输入的emacs:
+配置文件主要用于你的RPC信息以及下载相关的速度，进度以及磁盘等信息的设置。具体可参考<a href="https://github.com/green-93-nope/myConfiguration/blob/master/aria2/aria2.conf" target="_blank" rel="external">我的配置</a>。
+该配置文件一般放在$HOME/.aria2/aria2.conf中。
+</p>
+
+<p>
+除了这个配置文件之外你还需要创建一个session.lock文件，用来管理下载历史。
+该文件所放置的位置和配置文件中的input-file和save-session对应即可。
+</p>
+
+<p>
+配置完成后运行下面的命令，即可启动aria2到后台。-D表示运行程序到后台。
+假如你不确定自己的配置是否正确，你可以命令后不加-D来观察输出是否正确。
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-bash">$ <span style="color: #6c71c4;">LC_CTYPE</span>=zh_CN.UTF-8 emacs
+<pre class="src src-bash">$ aria2c --conf-path=&lt;PATH&gt; -D
 </pre>
 </div>
 
 <p>
-当然你还可以利用alias别名命令来简化命令的输入。
-比如我就在自己的个人环境信息配置文件(.profile或者.bashrc)中加入如下信息。
+如果你和我一样厌烦了每次都要输入这一大堆命令你可以使用alias别名或者写一个简单的脚本来简化你的输入。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">图形前端</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<p>
+aria2本身并没有图形界面，不过可以通过一些开源的web图形前端来进行管理，也是非常方便的。
+</p>
+
+<p>
+比较有名并且好用的图形前端主要有<a href="https://github.com/binux/yaaw" target="_blank" rel="external">YAAW</a> 和<a href="https://github.com/ziahamza/webui-aria2" target="_blank" rel="external">webui-aria2</a>。
+我使用的是第二个。
+</p>
+
+<p>
+这两款应用都已经在arch的AUR仓库中了，使用yaourt可以很方便的安装。比如：
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-bash"><span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">emacs</span>=<span style="color: #2aa198;">'LC_CTYPE=zh_CN.UTF-8 emacs'</span>
-<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">em</span>=<span style="color: #2aa198;">'emacsclient -t -a ""'</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
-<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">emc</span>=<span style="color: #2aa198;">'LC_CTYPE=zh_CN.UTF-8 emacsclient -nc -a ""'</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
-<span style="color: #6c71c4;">export</span> <span style="color: #6c71c4;">EDITOR</span>=<span style="color: #2aa198;">"$(if [[ -n $DISPLAY ]]; then echo 'LC_CTYPE=zh_CN.UTF-8 emacsclient -a ""'; else echo 'vi'; fi)"</span>
+<pre class="src src-bash">$ sudo yaourt -S webui-aria2
 </pre>
 </div>
 
 <p>
-之后直接在终端下输入emc，就可以快速启动emacsclient的图形界面进行编辑了，就是这么简单哈。
+安装完成后在浏览器中打开<a href="http://ziahamza.github.io/webui-aria2/" target="_blank" rel="external">管理页面</a> 即可进行管理，是不是特别简单。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline4" class="outline-2">
-<h2 id="orgheadline4">参考</h2>
-<div class="outline-text-2" id="text-orgheadline4">
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">更多</h3>
+<div class="outline-text-3" id="text-orgheadline5">
 <p>
-1.<a href="https://wiki.archlinux.org/index.php/Emacs_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="external">Emacs&#x2013;archwiki</a>
+aria2并不只是一个简单的下载工具，你还可以用它来：
 </p>
 
 <p>
-2.<a href="http://emacser.com/daemon.htm" target="_blank" rel="external">使用emacs daemon</a>
+1.下载百度云链接<a href="https://github.com/acgotaku/BaiduExporter" target="_blank" rel="external">BaiduExporter</a>。
 </p>
 
 <p>
-3.<a href="https://wiki.archlinux.org/index.php/Fcitx_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#Emacs_.E6.97.A0.E6.B3.95.E4.BD.BF.E7.94.A8.E8.BE.93.E5.85.A5.E6.B3.95" target="_blank" rel="external">fcitx&#x2013;archlinux</a>
+2.下载迅雷离线内容<a href="http://binux.github.io/ThunderLixianExporter/" target="_blank" rel="external">ThunderLixianExporter</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7">参考</h2>
+<div class="outline-text-2" id="text-orgheadline7">
+<p>
+1.<a href="http://blog.binux.me/2012/12/aria2-examples/" target="_blank" rel="external">aria2配置示例</a>
+</p>
+
+<p>
+2.<a href="http://moflying.com/2016/06/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8aria2%E5%8F%8Awebui-aria2%E4%B8%8B%E8%BD%BD%E7%99%BE%E5%BA%A6%E4%BA%91%E8%B5%84%E6%BA%90/" target="_blank" rel="external">如何使用aria2及webui-aria2下载百度云资源</a>
+</p>
+
+<p>
+3.<a href="https://wiki.archlinux.org/index.php/Aria2" target="_blank" rel="external">aria2-archwiki</a>
 </p>
 </div>
 </div>
@@ -495,7 +516,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
       
         <div class="post-tags">
           
-            <a href="/tags/emacs/" rel="tag">#emacs</a>
+            <a href="/tags/archlinux/" rel="tag">#archlinux</a>
           
         </div>
       
@@ -504,17 +525,13 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2016-09-06-2016-09-06-转投archlinux.html" rel="next" title="转投Archlinux">
-                <i class="fa fa-chevron-left"></i> 转投Archlinux
+              <a href="/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html" rel="next" title="配置支持中文输入的emacsclient">
+                <i class="fa fa-chevron-left"></i> 配置支持中文输入的emacsclient
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html" rel="prev" title="arch下使用aria2下载资源">
-                arch下使用aria2下载资源 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -635,7 +652,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline1"><span class="nav-number">1.</span> <span class="nav-text">emacsclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline2"><span class="nav-number">2.</span> <span class="nav-text">新窗口中支持中文字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline3"><span class="nav-number">3.</span> <span class="nav-text">用户环境变量配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline4"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline1"><span class="nav-number">1.</span> <span class="nav-text">aria2是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline6"><span class="nav-number">2.</span> <span class="nav-text">aria2的安装及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline2"><span class="nav-number">2.1.</span> <span class="nav-text">安装aria2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline3"><span class="nav-number">2.2.</span> <span class="nav-text">配置aria2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline4"><span class="nav-number">2.3.</span> <span class="nav-text">图形前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline5"><span class="nav-number">2.4.</span> <span class="nav-text">更多</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline7"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
