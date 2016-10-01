@@ -87,36 +87,36 @@
 
 
 <meta name="description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
+最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置支持中文输入的emacsclient">
 <meta property="og:url" content="http://summerisgreen.com/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html">
 <meta property="og:site_name" content="Summer is Green">
 <meta property="og:description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
-<meta property="og:updated_time" content="2016-09-25T07:37:55.968Z">
+最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一">
+<meta property="og:updated_time" content="2016-09-30T13:05:40.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置支持中文输入的emacsclient">
 <meta name="twitter:description" content="因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 
 
 
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置">
+最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一">
 
 
 
@@ -350,20 +350,20 @@
       
         <p>
 因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 </p>
 
 <p>
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置过程和使用方法。
+最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一些额外的配置来解决。
 </p>
 
 <div id="outline-container-orgheadline1" class="outline-2">
 <h2 id="orgheadline1">emacsclient</h2>
 <div class="outline-text-2" id="text-orgheadline1">
 <p>
-emacsclient的原理十分简单，就是先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
+emacsclient的原理十分简单，就是预先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
 这样就免去了最耗时的每次启动时的加载配置，十分快速的同时还拥有你自定义的配置。
 </p>
 
@@ -383,7 +383,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </p>
 
 <p>
-但是对于中文用户，进入后就会发现中文乱码，而且fcitx输入法无法被激活。因此需要一些额外的配置来支持中文的显示及中文输入法的使用。
+但是对于中文用户来说，进入后就会发现会遇到中文乱码，fcitx输入法无法被激活的问题。
+不过可以通过下面这些额外的设置来解决这两个问题。
 </p>
 </div>
 </div>
@@ -393,7 +394,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 <div class="outline-text-2" id="text-orgheadline2">
 <p>
 因为在emacs中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
-所以emacsclient中的中文字体需要下面的配置来额外进行设置。
+所以要想在emacsclient中正确的显示中文字体必须要添加一些额外的设置。
 </p>
 
 <div class="org-src-container">
@@ -428,8 +429,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 <h2 id="orgheadline3">用户环境变量配置</h2>
 <div class="outline-text-2" id="text-orgheadline3">
 <p>
-在系统环境中LC_CTYPE默认为英文时，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
-比如启动下面的命令，就可以使用支持fcitx中文输入的emacs:
+一般言系统环境中LC_CTYPE默认设置为英文，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
+使用下面的命令进行，就可以使用支持fcitx中文输入的emacs:
 </p>
 
 <div class="org-src-container">
@@ -504,8 +505,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2016-09-06-2016-09-06-转投archlinux.html" rel="next" title="转投Archlinux">
-                <i class="fa fa-chevron-left"></i> 转投Archlinux
+              <a href="/blog/2016-09-06-2016-09-06-简单的决策方法.html" rel="next" title="简单的决策方法">
+                <i class="fa fa-chevron-left"></i> 简单的决策方法
               </a>
             
           </div>
@@ -582,7 +583,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -599,7 +600,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

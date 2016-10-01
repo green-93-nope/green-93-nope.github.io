@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="emacs,blog," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Summer is Green" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&amp;lt;The Craft of Research&amp;gt;中所提倡的以书面形式思考来改善自己的知识体系管理和思维深度。
+
+
+
+写博客就是自己以书面形式思考的一部分，因为未来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Hexo和emacs-Org来写博客">
+<meta property="og:url" content="http://summerisgreen.com/blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&amp;lt;The Craft of Research&amp;gt;中所提倡的以书面形式思考来改善自己的知识体系管理和思维深度。
+
+
+
+写博客就是自己以书面形式思考的一部分，因为未来">
+<meta property="og:updated_time" content="2016-10-01T13:37:29.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Hexo和emacs-Org来写博客">
+<meta name="twitter:description" content="经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&amp;lt;The Craft of Research&amp;gt;中所提倡的以书面形式思考来改善自己的知识体系管理和思维深度。
+
+
+
+写博客就是自己以书面形式思考的一部分，因为未来">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://summerisgreen.com/blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html"/>
+
+  <title> 使用Hexo和emacs-Org来写博客 | Summer is Green </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8c73f2284db49cbb33f0d50d3b61e9bb";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Summer is Green</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">a blog for writing and thinking</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Hexo和emacs-Org来写博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-30T00:00:00+08:00" content="2016-09-30">
+              2016-09-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/emacs/" itemprop="url" rel="index">
+                    <span itemprop="name">emacs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>
+经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&lt;The Craft of Research&gt;中所提倡的以书面形式思考来改善自己的知识体系管理和思维深度。
+</p>
+
+<p>
+写博客就是自己以书面形式思考的一部分，因为未来准备成为一名程序员，所以期望自己的博客除了平常的读书感悟外还能有如下的内容：
+</p>
+<ul class="org-ul">
+<li>分享一些优秀的技术工具及配置</li>
+<li>编程方面的心得</li>
+<li>一些体系知识的整理</li>
+</ul>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">部署博客网站</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+对于博客的部署采用目前最流行的Github Pages + Hexo的组合。
+这种方法有着免费、简单、主题多、网上教程多等众多优点，而且遇到问题随时可以google到解决方案，
+作为一个简单省心的博客来说，是再好不过的选择了。
+</p>
+
+<p>
+具体的博客部署可以分为购买域名，绑定域名到Github Page，和使用Hexo部署博客三个步骤来进行。
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">购买域名</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<p>
+作为一个自己搭建的博客网站怎么能没有自己的域名呢。
+域名的话一般在godaddy上购买，购买前可以提前搜下优惠码，大约能打个6到7折的样子。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">绑定域名到Github Page</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<p>
+在博客部署过程中最重要的一步就是绑定域名到Github Page上。
+在你完成了域名的绑定之后，只要别人在浏览器中输入你的域名，比如:www.baidu.com，
+就可以获取到你的网页服务也就是显示出你的博客来。只有这样你所选择的域名才真正属于你。
+</p>
+
+<p>
+这整个过程可以分为两个步骤来完成：
+</p>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4">申请Github Pages的空间</h4>
+<div class="outline-text-4" id="text-orgheadline4">
+<p>
+个人或者项目主页的仓库的命名是有固定的要求的，必须命名为username.github.io。
+为了在别人向github网站请求你的服务时github能够回应你的服务内容，
+你需要向github注册你的服务名称，也就是域名。
+方法是在主目录建立一个有且仅有你的域名名称的CNAME文件来进行说明。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5">dns设置</h4>
+<div class="outline-text-4" id="text-orgheadline5">
+<p>
+在有了网页的服务之后，还欠缺的一项服务就是dns服务。
+也就是如何引导访问你域名的请求到达你的服务器，在这里就是github page的服务器地址。
+</p>
+
+<p>
+简单的做法是直接在godaddy中进行dns的详细设置，不过因为一些大家都懂的原因，
+godaddy的dns服务经常会碰到在国内被屏蔽而无法访问的情况。
+所以这里需要使用第三方dns来进行解析，一般推荐是使用免费而又快速的dnspod。
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="orgheadline6"></a>godaddy修改NS记录<br><div class="outline-text-5" id="text-orgheadline6">
+<p>
+为了使用第三方的dns服务，还需要在godaddy中添加如下的NameService记录：
+</p>
+
+<p>
+f1g1ns1.dnspod.net，f1g1ns2.dnspod.net。
+</p>
+
+<p>
+这样别人向高级域名服务器（godaddy的dns服务器）请求你的服务时，就可以获得dnspod的dns服务器的地址了。
+</p>
+</div></li>
+
+<li><a id="orgheadline7"></a>dnspod进行dns设置<br><div class="outline-text-5" id="text-orgheadline7">
+<p>
+最后只要再对dnspod进行些设置就可以完成域名访问请求从dnspod到github page的引导。
+</p>
+
+<p>
+这一步也是非常简单，只要添加域名并添加下面两个github pages的ip地址作为A记录就行了。
+</p>
+
+<p>
+192.30.252.153，192.30.252.154
+</p>
+</div></li></ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">使用Hexo部署博客</h3>
+<div class="outline-text-3" id="text-orgheadline8">
+<p>
+之前已经完成了博客网站的初步准备工作，接下来就可以使用博客框架来进行博客的快速部署了。
+</p>
+
+<p>
+之所以选用Hexo来作为博客框架，是因为它使用简单，而且还拥有非常丰富的主题资源。
+</p>
+
+<p>
+在这里还会碰到的一个小问题就是每次重新生成静态文件并部署了之后，根目录下的CNAME文件都会消失。
+这个只需要在source文件夹中添加相应的CNAME文件即可解决。
+</p>
+
+<p>
+在使用nodejs安装了hexo之后，就可以通过简单的命令来进行启动服务器或者部署博客这些常用的操作。
+具体的命令可以参考<a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="external">hexo文档</a>。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9">使用org-mode来写博客</h2>
+<div class="outline-text-2" id="text-orgheadline9">
+<p>
+因为现在流行的博客框架包括hexo都是以markdown作为默认文本格式的。
+如果直接添加org文本的话，格式解析是不匹配的，所以需要通过一些方法来将org文本直接解析为html格式。
+</p>
+
+<p>
+google了下发现org-octopress这个插件来完成这个需求了，emacs丰富的插件果然没有让我失望。
+</p>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">配置org-octopress</h3>
+<div class="outline-text-3" id="text-orgheadline10">
+<p>
+从Melpa中安装了org-octopress之后，添加下面的代码作为你的文章发布的基础设置。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">require</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-octopress</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-top       <span style="color: #2aa198;">"~/Hexo"</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-posts     <span style="color: #2aa198;">"~/Hexo/source/_posts"</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">&#25991;&#31456;&#21457;&#24067;&#30446;&#24405;</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-org-top   <span style="color: #2aa198;">"~/Hexo"</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-org-posts <span style="color: #2aa198;">"~/Hexo/blog"</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">org&#25991;&#31456;&#30446;&#24405;</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-setup-file          <span style="color: #2aa198;">"~/Hexo/setupfile.org"</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+之后就可以使用C-c C-e P 来使用octopress输出为你的Hexo博客文章。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">org博客中引用图片</h3>
+<div class="outline-text-3" id="text-orgheadline11">
+<p>
+使用org-mode来写博客还需要解决的一个问题就是文章中引用图片的问题。
+解决方法是在emacs的配置文件中加入下面的代码：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">require</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">ox-publish</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">org-custom-link-img-follow</span> <span style="color: #2aa198;">(</span>path<span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-open-file-with-emacs
+   <span style="color: #b58900;">(</span>format <span style="color: #2aa198;">"../source/img/%s"</span> path<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>   <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">the path of the image in local dic</span>
+
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">org-custom-link-img-export</span> <span style="color: #2aa198;">(</span>path desc format<span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">cond</span>
+   <span style="color: #b58900;">(</span><span style="color: #859900;">(</span>eq format <span style="color: #859900;">'</span><span style="color: #268bd2;">html</span><span style="color: #859900;">)</span>
+    <span style="color: #859900;">(</span>format <span style="color: #2aa198;">"&lt;img src=</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">/img/%s</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;"> alt=</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">%s</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">/&gt;"</span> path desc<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">the path of the image in webserver</span>
+
+<span style="color: #657b83;">(</span>org-add-link-type <span style="color: #2aa198;">"img"</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-custom-link-img-follow</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-custom-link-img-export</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+<p>
+之后引用的图片无论是在本地服务器中还是在部署的博客网站中都能很好的显示。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12">在emacs中启动服务器和部署博客</h2>
+<div class="outline-text-2" id="text-orgheadline12">
+<p>
+在emacs中启动外部服务的任务可以通过Prodigy这个插件提供的功能完成。
+在Melpa中安装了该插件之后，添加下面的代码到你的配置文件后，就可以通过M-x
+ prodigy来启动相应的服务了。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span>prodigy-define-service
+ <span style="color: #6c71c4;">:name</span> <span style="color: #2aa198;">"Hexo Server"</span>
+ <span style="color: #6c71c4;">:command</span> <span style="color: #2aa198;">"hexo"</span>
+ <span style="color: #6c71c4;">:args</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #2aa198;">"server"</span><span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:cwd</span> <span style="color: #2aa198;">"~/Hexo"</span>
+ <span style="color: #6c71c4;">:tags</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span>hexo server<span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:kill-signal</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">sigkill</span>
+ <span style="color: #6c71c4;">:kill-process-buffer-on-stop</span> t<span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span>prodigy-define-service
+ <span style="color: #6c71c4;">:name</span> <span style="color: #2aa198;">"Hexo Deploy"</span>
+ <span style="color: #6c71c4;">:command</span> <span style="color: #2aa198;">"hexo"</span>
+ <span style="color: #6c71c4;">:args</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #2aa198;">"deploy"</span> <span style="color: #2aa198;">"--generate"</span><span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:cwd</span> <span style="color: #2aa198;">"~/Hexo"</span>
+ <span style="color: #6c71c4;">:tags</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span>hexo deploy<span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:kill-signal</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">sigkill</span>
+ <span style="color: #6c71c4;">:kill-process-buffer-on-stop</span> t<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+你可以通过s来启动所选服务，使用S来停止对应的服务，
+该模式的详细的快捷键定义在prodigy-mode-map中，不过知道这两个就应该够用了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">参考</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+<p>
+1.<a href="http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明 Github Pages与 jekyll 教程</a>
+</p>
+
+<p>
+2.<a href="https://zilongshanren.com/blog/2015-07-19-add-org-mode-support.html" target="_blank" rel="external">使用 Org-mode 来写博客</a>
+</p>
+
+<p>
+3.<a href="https://zilongshanren.com/blog/2015-08-02-migrate-blog-to-hexo.html" target="_blank" rel="external">迁移博客到 Hexo</a>
+</p>
+
+<p>
+4.<a href="http://stackoverflow.com/questions/14684263/how-to-org-mode-image-absolute-path-of-export-html" target="_blank" rel="external">how to org mode image absolute path of export html</a>
+</p>
+</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/emacs/" rel="tag">#emacs</a>
+          
+            <a href="/tags/blog/" rel="tag">#blog</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html" rel="next" title="arch下使用aria2下载资源">
+                <i class="fa fa-chevron-left"></i> arch下使用aria2下载资源
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/author.jpg"
+               alt="Green" />
+          <p class="site-author-name" itemprop="name">Green</p>
+          <p class="site-description motion-element" itemprop="description">Abracadabra</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline1"><span class="nav-number">1.</span> <span class="nav-text">部署博客网站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline2"><span class="nav-number">1.1.</span> <span class="nav-text">购买域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline3"><span class="nav-number">1.2.</span> <span class="nav-text">绑定域名到Github Page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#orgheadline4"><span class="nav-number">1.2.1.</span> <span class="nav-text">申请Github Pages的空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orgheadline5"><span class="nav-number">1.2.2.</span> <span class="nav-text">dns设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline8"><span class="nav-number">1.3.</span> <span class="nav-text">使用Hexo部署博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline9"><span class="nav-number">2.</span> <span class="nav-text">使用org-mode来写博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline10"><span class="nav-number">2.1.</span> <span class="nav-text">配置org-octopress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgheadline11"><span class="nav-number">2.2.</span> <span class="nav-text">org博客中引用图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline12"><span class="nav-number">3.</span> <span class="nav-text">在emacs中启动服务器和部署博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgheadline13"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

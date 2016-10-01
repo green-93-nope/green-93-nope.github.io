@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2016-09-25T07:33:29.232Z</updated>
+  <updated>2016-10-01T13:37:29.137Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -16,11 +16,298 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用Hexo和emacs-Org来写博客</title>
+    <link href="http://summerisgreen.com//blog/2016-09-30-2016-09-30-%E4%BD%BF%E7%94%A8hexo%E5%92%8Cemacs-org%E6%9D%A5%E5%86%99%E5%8D%9A%E5%AE%A2.html"/>
+    <id>http://summerisgreen.com//blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html</id>
+    <published>2016-09-29T16:00:00.000Z</published>
+    <updated>2016-10-01T13:37:29.137Z</updated>
+    
+    <content type="html"><![CDATA[<p>
+经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&lt;The Craft of Research&gt;中所提倡的以书面形式思考来改善自己的知识体系管理和思维深度。
+</p>
+
+<p>
+写博客就是自己以书面形式思考的一部分，因为未来准备成为一名程序员，所以期望自己的博客除了平常的读书感悟外还能有如下的内容：
+</p>
+<ul class="org-ul">
+<li>分享一些优秀的技术工具及配置</li>
+<li>编程方面的心得</li>
+<li>一些体系知识的整理</li>
+</ul>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">部署博客网站</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+对于博客的部署采用目前最流行的Github Pages + Hexo的组合。
+这种方法有着免费、简单、主题多、网上教程多等众多优点，而且遇到问题随时可以google到解决方案，
+作为一个简单省心的博客来说，是再好不过的选择了。
+</p>
+
+<p>
+具体的博客部署可以分为购买域名，绑定域名到Github Page，和使用Hexo部署博客三个步骤来进行。
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">购买域名</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<p>
+作为一个自己搭建的博客网站怎么能没有自己的域名呢。
+域名的话一般在godaddy上购买，购买前可以提前搜下优惠码，大约能打个6到7折的样子。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">绑定域名到Github Page</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<p>
+在博客部署过程中最重要的一步就是绑定域名到Github Page上。
+在你完成了域名的绑定之后，只要别人在浏览器中输入你的域名，比如:www.baidu.com，
+就可以获取到你的网页服务也就是显示出你的博客来。只有这样你所选择的域名才真正属于你。
+</p>
+
+<p>
+这整个过程可以分为两个步骤来完成：
+</p>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4">申请Github Pages的空间</h4>
+<div class="outline-text-4" id="text-orgheadline4">
+<p>
+个人或者项目主页的仓库的命名是有固定的要求的，必须命名为username.github.io。
+为了在别人向github网站请求你的服务时github能够回应你的服务内容，
+你需要向github注册你的服务名称，也就是域名。
+方法是在主目录建立一个有且仅有你的域名名称的CNAME文件来进行说明。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5">dns设置</h4>
+<div class="outline-text-4" id="text-orgheadline5">
+<p>
+在有了网页的服务之后，还欠缺的一项服务就是dns服务。
+也就是如何引导访问你域名的请求到达你的服务器，在这里就是github page的服务器地址。
+</p>
+
+<p>
+简单的做法是直接在godaddy中进行dns的详细设置，不过因为一些大家都懂的原因，
+godaddy的dns服务经常会碰到在国内被屏蔽而无法访问的情况。
+所以这里需要使用第三方dns来进行解析，一般推荐是使用免费而又快速的dnspod。
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="orgheadline6"></a>godaddy修改NS记录<br><div class="outline-text-5" id="text-orgheadline6">
+<p>
+为了使用第三方的dns服务，还需要在godaddy中添加如下的NameService记录：
+</p>
+
+<p>
+f1g1ns1.dnspod.net，f1g1ns2.dnspod.net。
+</p>
+
+<p>
+这样别人向高级域名服务器（godaddy的dns服务器）请求你的服务时，就可以获得dnspod的dns服务器的地址了。
+</p>
+</div></li>
+
+<li><a id="orgheadline7"></a>dnspod进行dns设置<br><div class="outline-text-5" id="text-orgheadline7">
+<p>
+最后只要再对dnspod进行些设置就可以完成域名访问请求从dnspod到github page的引导。
+</p>
+
+<p>
+这一步也是非常简单，只要添加域名并添加下面两个github pages的ip地址作为A记录就行了。
+</p>
+
+<p>
+192.30.252.153，192.30.252.154
+</p>
+</div></li></ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">使用Hexo部署博客</h3>
+<div class="outline-text-3" id="text-orgheadline8">
+<p>
+之前已经完成了博客网站的初步准备工作，接下来就可以使用博客框架来进行博客的快速部署了。
+</p>
+
+<p>
+之所以选用Hexo来作为博客框架，是因为它使用简单，而且还拥有非常丰富的主题资源。
+</p>
+
+<p>
+在这里还会碰到的一个小问题就是每次重新生成静态文件并部署了之后，根目录下的CNAME文件都会消失。
+这个只需要在source文件夹中添加相应的CNAME文件即可解决。
+</p>
+
+<p>
+在使用nodejs安装了hexo之后，就可以通过简单的命令来进行启动服务器或者部署博客这些常用的操作。
+具体的命令可以参考<a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="external">hexo文档</a>。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9">使用org-mode来写博客</h2>
+<div class="outline-text-2" id="text-orgheadline9">
+<p>
+因为现在流行的博客框架包括hexo都是以markdown作为默认文本格式的。
+如果直接添加org文本的话，格式解析是不匹配的，所以需要通过一些方法来将org文本直接解析为html格式。
+</p>
+
+<p>
+google了下发现org-octopress这个插件来完成这个需求了，emacs丰富的插件果然没有让我失望。
+</p>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">配置org-octopress</h3>
+<div class="outline-text-3" id="text-orgheadline10">
+<p>
+从Melpa中安装了org-octopress之后，添加下面的代码作为你的文章发布的基础设置。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">require</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-octopress</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-top       <span style="color: #2aa198;">"~/Hexo"</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-posts     <span style="color: #2aa198;">"~/Hexo/source/_posts"</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">&#25991;&#31456;&#21457;&#24067;&#30446;&#24405;</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-org-top   <span style="color: #2aa198;">"~/Hexo"</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-directory-org-posts <span style="color: #2aa198;">"~/Hexo/blog"</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">org&#25991;&#31456;&#30446;&#24405;</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-octopress-setup-file          <span style="color: #2aa198;">"~/Hexo/setupfile.org"</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+之后就可以使用C-c C-e P 来使用octopress输出为你的Hexo博客文章。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">org博客中引用图片</h3>
+<div class="outline-text-3" id="text-orgheadline11">
+<p>
+使用org-mode来写博客还需要解决的一个问题就是文章中引用图片的问题。
+解决方法是在emacs的配置文件中加入下面的代码：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">require</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">ox-publish</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">org-custom-link-img-follow</span> <span style="color: #2aa198;">(</span>path<span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-open-file-with-emacs
+   <span style="color: #b58900;">(</span>format <span style="color: #2aa198;">"../source/img/%s"</span> path<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>   <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">the path of the image in local dic</span>
+
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">org-custom-link-img-export</span> <span style="color: #2aa198;">(</span>path desc format<span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">cond</span>
+   <span style="color: #b58900;">(</span><span style="color: #859900;">(</span>eq format <span style="color: #859900;">'</span><span style="color: #268bd2;">html</span><span style="color: #859900;">)</span>
+    <span style="color: #859900;">(</span>format <span style="color: #2aa198;">"&lt;img src=</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">/img/%s</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;"> alt=</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">%s</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">/&gt;"</span> path desc<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">;</span><span style="color: #93a1a1; font-style: italic;">the path of the image in webserver</span>
+
+<span style="color: #657b83;">(</span>org-add-link-type <span style="color: #2aa198;">"img"</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-custom-link-img-follow</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org-custom-link-img-export</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+<p>
+之后引用的图片无论是在本地服务器中还是在部署的博客网站中都能很好的显示。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-2">
+<h2 id="orgheadline12">在emacs中启动服务器和部署博客</h2>
+<div class="outline-text-2" id="text-orgheadline12">
+<p>
+在emacs中启动外部服务的任务可以通过Prodigy这个插件提供的功能完成。
+在Melpa中安装了该插件之后，添加下面的代码到你的配置文件后，就可以通过M-x
+ prodigy来启动相应的服务了。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp"><span style="color: #657b83;">(</span>prodigy-define-service
+ <span style="color: #6c71c4;">:name</span> <span style="color: #2aa198;">"Hexo Server"</span>
+ <span style="color: #6c71c4;">:command</span> <span style="color: #2aa198;">"hexo"</span>
+ <span style="color: #6c71c4;">:args</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #2aa198;">"server"</span><span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:cwd</span> <span style="color: #2aa198;">"~/Hexo"</span>
+ <span style="color: #6c71c4;">:tags</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span>hexo server<span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:kill-signal</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">sigkill</span>
+ <span style="color: #6c71c4;">:kill-process-buffer-on-stop</span> t<span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span>prodigy-define-service
+ <span style="color: #6c71c4;">:name</span> <span style="color: #2aa198;">"Hexo Deploy"</span>
+ <span style="color: #6c71c4;">:command</span> <span style="color: #2aa198;">"hexo"</span>
+ <span style="color: #6c71c4;">:args</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #2aa198;">"deploy"</span> <span style="color: #2aa198;">"--generate"</span><span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:cwd</span> <span style="color: #2aa198;">"~/Hexo"</span>
+ <span style="color: #6c71c4;">:tags</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span>hexo deploy<span style="color: #2aa198;">)</span>
+ <span style="color: #6c71c4;">:kill-signal</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">sigkill</span>
+ <span style="color: #6c71c4;">:kill-process-buffer-on-stop</span> t<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+你可以通过s来启动所选服务，使用S来停止对应的服务，
+该模式的详细的快捷键定义在prodigy-mode-map中，不过知道这两个就应该够用了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">参考</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+<p>
+1.<a href="http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明 Github Pages与 jekyll 教程</a>
+</p>
+
+<p>
+2.<a href="https://zilongshanren.com/blog/2015-07-19-add-org-mode-support.html" target="_blank" rel="external">使用 Org-mode 来写博客</a>
+</p>
+
+<p>
+3.<a href="https://zilongshanren.com/blog/2015-08-02-migrate-blog-to-hexo.html" target="_blank" rel="external">迁移博客到 Hexo</a>
+</p>
+
+<p>
+4.<a href="http://stackoverflow.com/questions/14684263/how-to-org-mode-image-absolute-path-of-export-html" target="_blank" rel="external">how to org mode image absolute path of export html</a>
+</p>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+经过一段时间的纠结，终于再次下定决心开通博客。
+这次决定要开始写博客，主要是因为发现自己在过去的一年内虽然看了很多书，但绝大部分的内容却都又被遗忘了。
+而剩下的那部分知识仔细回想起来也都觉得是非常混乱而且肤浅的。
+所以想要通过&amp;lt;The Craft of Resear
+    
+    </summary>
+    
+      <category term="emacs" scheme="http://summerisgreen.com/categories/emacs/"/>
+    
+    
+      <category term="emacs" scheme="http://summerisgreen.com/tags/emacs/"/>
+    
+      <category term="blog" scheme="http://summerisgreen.com/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>arch下使用aria2下载资源</title>
     <link href="http://summerisgreen.com//blog/2016-09-25-2016-09-25-arch%E4%B8%8B%E4%BD%BF%E7%94%A8aria2%E4%B8%8B%E8%BD%BD%E8%B5%84%E6%BA%90.html"/>
     <id>http://summerisgreen.com//blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html</id>
     <published>2016-09-24T16:00:00.000Z</published>
-    <updated>2016-09-25T07:33:29.232Z</updated>
+    <updated>2016-09-30T13:09:48.401Z</updated>
     
     <content type="html"><![CDATA[<p>
 linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
@@ -37,8 +324,9 @@ aria2是一款轻量级的、支持多协议的和多个下载源的下载工具
 </p>
 
 <p>
-我想在这里说一下它的两个非常惊艳的优点：一个是轻量级：占用内存空间十分少，通常只占用4-9MB。
+我想在这里强调一下它的两个非常惊艳的优点：一个是轻量级：占用内存空间十分少，通常只占用4-9MB。
 另一个优势就是支持RPC界面远程控制，可以很方便的对被配置为服务器的主机进行下载管理。
+可以说对于linux主机来说是一款绝佳的下载工具。
 </p>
 
 <p>
@@ -184,24 +472,24 @@ linux世界中一直没有迅雷这样在windows中文用户中占有统治地�
     <link href="http://summerisgreen.com//blog/2016-09-24-2016-09-24-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E7%9A%84emacsclient.html"/>
     <id>http://summerisgreen.com//blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html</id>
     <published>2016-09-23T16:00:00.000Z</published>
-    <updated>2016-09-25T07:37:55.968Z</updated>
+    <updated>2016-09-30T13:05:40.891Z</updated>
     
     <content type="html"><![CDATA[<p>
 因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 </p>
 
 <p>
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了一下。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，在搜索解决方案的过程中又发现这方面的资料并不多，
-所以特地在这里介绍下完整的配置过程和使用方法。
+最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一些额外的配置来解决。
 </p>
 
 <div id="outline-container-orgheadline1" class="outline-2">
 <h2 id="orgheadline1">emacsclient</h2>
 <div class="outline-text-2" id="text-orgheadline1">
 <p>
-emacsclient的原理十分简单，就是先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
+emacsclient的原理十分简单，就是预先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
 这样就免去了最耗时的每次启动时的加载配置，十分快速的同时还拥有你自定义的配置。
 </p>
 
@@ -221,7 +509,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </p>
 
 <p>
-但是对于中文用户，进入后就会发现中文乱码，而且fcitx输入法无法被激活。因此需要一些额外的配置来支持中文的显示及中文输入法的使用。
+但是对于中文用户来说，进入后就会发现会遇到中文乱码，fcitx输入法无法被激活的问题。
+不过可以通过下面这些额外的设置来解决这两个问题。
 </p>
 </div>
 </div>
@@ -231,7 +520,7 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 <div class="outline-text-2" id="text-orgheadline2">
 <p>
 因为在emacs中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
-所以emacsclient中的中文字体需要下面的配置来额外进行设置。
+所以要想在emacsclient中正确的显示中文字体必须要添加一些额外的设置。
 </p>
 
 <div class="org-src-container">
@@ -266,8 +555,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 <h2 id="orgheadline3">用户环境变量配置</h2>
 <div class="outline-text-2" id="text-orgheadline3">
 <p>
-在系统环境中LC_CTYPE默认为英文时，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
-比如启动下面的命令，就可以使用支持fcitx中文输入的emacs:
+一般言系统环境中LC_CTYPE默认设置为英文，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
+使用下面的命令进行，就可以使用支持fcitx中文输入的emacs:
 </p>
 
 <div class="org-src-container">
@@ -317,11 +606,12 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
     
       &lt;p&gt;
 因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，特别慢，所以一直是通过gedit来进行简单的快速编辑。
+但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
+，所以一直是使用gedit作为替代来进行简单的编辑处理。
 &lt;/p&gt;
 
 &lt;p&gt;
-最近看到了一个使用emacsclient的方法，觉得不错特意尝试了
+最近看到了一个
     
     </summary>
     
@@ -329,122 +619,6 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
     
     
       <category term="emacs" scheme="http://summerisgreen.com/tags/emacs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>转投Archlinux</title>
-    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-转投archlinux.html</id>
-    <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2016-09-06T11:21:15.135Z</updated>
-    
-    <content type="html"><![CDATA[
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1">为什么选择archlinux?</h2>
-<div class="outline-text-2" id="text-orgheadline1">
-<p>
-在linux众多的发行版中， 除了arch外我之前还用过 opensuse 和 ubuntu这两款系统。这两款发行版可以说是在linux世界中极其出名的， 而且不管是它们的易用性还是制作的精良度在linux的发行版中也都是名列前矛的。但是尽管它们如此优秀，它们还是有一些缺点让我难以忍受， 最终做出了弃用的选择。
-</p>
-
-<p>
-产于德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但永久了之后你就会发现它也有很多缺点让你无法忍受：
-</p>
-<ol class="org-ol">
-<li>由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都会被它的慢性子给急死。</li>
-<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样竟然还出现了python-matplotlib这个使用应该非常多的包出现了打包错误无法使用这种情况。。。</li>
-<li>opensuse采用的kde桌面虽然是非常华丽， 但是bug率也是让人无法忍受, 时常会出现桌面崩溃的情况， 这对于作为日常工作使用的系统来说可以说是致命的缺陷。也正因此我继而选择改用ubuntu。</li>
-</ol>
-
-<p>
-ubuntu可以说是当前linux世界最为流行的发行版了， 它的优点也是让你用了就很容易感受出（比如开箱即用，强大的包管理等），并继而产生一定的依赖性。 作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。不过这个开箱即用的设计理念也对想要尝试自己DRY的人带来很多的问题。如果你想要尝试一些轻量级的桌面环境的话，你会发现自己要解决大量的和ubuntu unity之间的冲突。如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有几个无法解决，搜索引擎也找不到有用的解决方案。在这种时候一个想要自己配置一个简洁而又能极大提高生产力的系统的我，又再次选择更换操作系统。
-</p>
-
-<p>
-这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想有下面几点：
-</p>
-</div>
-
-<div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2">简洁</h3>
-<div class="outline-text-3" id="text-orgheadline2">
-<p>
-arch的哲学是Keep It Simple, Stupid。所以在初始安装时它只会安装一个无图像界面的基本系统。这也给arch用户极大的自由度以根据自己的考量或喜爱来DRY出自己的系统。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3">包管理</h3>
-<div class="outline-text-3" id="text-orgheadline3">
-<p>
-arch有着极其强大的包管理工具pacman，它的输出简单易懂而且十分规范，非常方便后期的解析。如果你仔细看过pacman的官方wiki，你就会发现如此惊艳的获取来自官方源的软件包并重新安装的命令：
-</p>
-
-<pre class="example">
-comm -23 &lt;(pacman -Qeq|sort) &lt;(pacman -Qmq|sort) &gt; pkglist
-sudo pacman -S $(&lt; pkglist)
-</pre>
-
-<p>
-arch的官方软件仓库中的软件已经足够丰富了，具有一定用户量的软件都会有。如果你要用的确实是一些非常冷门的软件而在官方仓库中无法找到，那就试一下AUR仓库，你有很大的可能会满意而归。这是一个由用户者们自行管理的软件仓库，拥有非常丰富的软件资源，而且它的软件包管理也极其方便有 yaourt这种和pacman命令参数兼容的工具来提供管理服务。
-</p>
-
-<p>
-arch的包管理还有一个很强大的优势就是镜像源多，更新速度极其快。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4">Wiki</h3>
-<div class="outline-text-3" id="text-orgheadline4">
-<p>
-arch还有一个对其他发行版的巨大优势就是极其非常完善的wiki，从系统的安装到应用的使用配置都有大量的wiki来进行指导，这也是为什么archlinux并不容易上手，但却有着庞大用户量的一个原因吧。
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5">arch之旅</h2>
-<div class="outline-text-2" id="text-orgheadline5">
-<p>
-说到这，可能你对arch会开始感兴趣。不过如果要你使用它，你还是有一些抵触，因为你可能听说：
-</p>
-
-<p>
-Q1: archlinux很难安装， 不是那种很爱折腾的人最好不要使用。
-</p>
-
-<p>
-A1: archlinux的安装虽然不像ubuntu那样傻瓜式的简单， 但只要你按照官方的<a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank" rel="external">安装wiki</a> 的步骤一步步来，也并不难，只是需要点耐心了。当然如果你是和我一样的windows双系统使用者, 你还需要在安装启动引导前安装os-prober即可。
-</p>
-
-<p>
-Q2: archlinux是滚动升级版本并且很容易滚挂。
-</p>
-
-<p>
-A2: archlinux是滚动更新的， 如果用户平时不注意维护是很容易滚挂的，但是如果你是一个有心人，平时注意定期<a href="https://wiki.archlinux.org/index.php/System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="external">维护</a> 和<a href="https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" target="_blank" rel="external">备份</a> ，并且在你每次更新系统前留意<a href="https://www.archlinux.org/feeds/news/" target="_blank" rel="external">archlinux新闻</a> 的话, 并不需要担心滚挂的问题。网上也有很多人，安装了一次后可以用上很多年，比ubuntu LTS版用的还长。
-</p>
-</div>
-</div>
-]]></content>
-    
-    <summary type="html">
-    
-      
-&lt;div id=&quot;outline-container-orgheadline1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgheadline1&quot;&gt;为什么选择archlinux?&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text
-    
-    </summary>
-    
-      <category term="archlinux" scheme="http://summerisgreen.com/categories/archlinux/"/>
-    
-    
-      <category term="archlinux" scheme="http://summerisgreen.com/tags/archlinux/"/>
     
   </entry>
   
@@ -799,6 +973,122 @@ value_of_info = value_with_info - value_without_info = $200
       <category term="模型" scheme="http://summerisgreen.com/tags/%E6%A8%A1%E5%9E%8B/"/>
     
       <category term="思维方式" scheme="http://summerisgreen.com/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>转投Archlinux</title>
+    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
+    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-转投archlinux.html</id>
+    <published>2016-09-05T16:00:00.000Z</published>
+    <updated>2016-09-06T11:21:15.135Z</updated>
+    
+    <content type="html"><![CDATA[
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">为什么选择archlinux?</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+在linux众多的发行版中， 除了arch外我之前还用过 opensuse 和 ubuntu这两款系统。这两款发行版可以说是在linux世界中极其出名的， 而且不管是它们的易用性还是制作的精良度在linux的发行版中也都是名列前矛的。但是尽管它们如此优秀，它们还是有一些缺点让我难以忍受， 最终做出了弃用的选择。
+</p>
+
+<p>
+产于德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但永久了之后你就会发现它也有很多缺点让你无法忍受：
+</p>
+<ol class="org-ol">
+<li>由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都会被它的慢性子给急死。</li>
+<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样竟然还出现了python-matplotlib这个使用应该非常多的包出现了打包错误无法使用这种情况。。。</li>
+<li>opensuse采用的kde桌面虽然是非常华丽， 但是bug率也是让人无法忍受, 时常会出现桌面崩溃的情况， 这对于作为日常工作使用的系统来说可以说是致命的缺陷。也正因此我继而选择改用ubuntu。</li>
+</ol>
+
+<p>
+ubuntu可以说是当前linux世界最为流行的发行版了， 它的优点也是让你用了就很容易感受出（比如开箱即用，强大的包管理等），并继而产生一定的依赖性。 作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。不过这个开箱即用的设计理念也对想要尝试自己DRY的人带来很多的问题。如果你想要尝试一些轻量级的桌面环境的话，你会发现自己要解决大量的和ubuntu unity之间的冲突。如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有几个无法解决，搜索引擎也找不到有用的解决方案。在这种时候一个想要自己配置一个简洁而又能极大提高生产力的系统的我，又再次选择更换操作系统。
+</p>
+
+<p>
+这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想有下面几点：
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">简洁</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<p>
+arch的哲学是Keep It Simple, Stupid。所以在初始安装时它只会安装一个无图像界面的基本系统。这也给arch用户极大的自由度以根据自己的考量或喜爱来DRY出自己的系统。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">包管理</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<p>
+arch有着极其强大的包管理工具pacman，它的输出简单易懂而且十分规范，非常方便后期的解析。如果你仔细看过pacman的官方wiki，你就会发现如此惊艳的获取来自官方源的软件包并重新安装的命令：
+</p>
+
+<pre class="example">
+comm -23 &lt;(pacman -Qeq|sort) &lt;(pacman -Qmq|sort) &gt; pkglist
+sudo pacman -S $(&lt; pkglist)
+</pre>
+
+<p>
+arch的官方软件仓库中的软件已经足够丰富了，具有一定用户量的软件都会有。如果你要用的确实是一些非常冷门的软件而在官方仓库中无法找到，那就试一下AUR仓库，你有很大的可能会满意而归。这是一个由用户者们自行管理的软件仓库，拥有非常丰富的软件资源，而且它的软件包管理也极其方便有 yaourt这种和pacman命令参数兼容的工具来提供管理服务。
+</p>
+
+<p>
+arch的包管理还有一个很强大的优势就是镜像源多，更新速度极其快。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Wiki</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<p>
+arch还有一个对其他发行版的巨大优势就是极其非常完善的wiki，从系统的安装到应用的使用配置都有大量的wiki来进行指导，这也是为什么archlinux并不容易上手，但却有着庞大用户量的一个原因吧。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">arch之旅</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+<p>
+说到这，可能你对arch会开始感兴趣。不过如果要你使用它，你还是有一些抵触，因为你可能听说：
+</p>
+
+<p>
+Q1: archlinux很难安装， 不是那种很爱折腾的人最好不要使用。
+</p>
+
+<p>
+A1: archlinux的安装虽然不像ubuntu那样傻瓜式的简单， 但只要你按照官方的<a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank" rel="external">安装wiki</a> 的步骤一步步来，也并不难，只是需要点耐心了。当然如果你是和我一样的windows双系统使用者, 你还需要在安装启动引导前安装os-prober即可。
+</p>
+
+<p>
+Q2: archlinux是滚动升级版本并且很容易滚挂。
+</p>
+
+<p>
+A2: archlinux是滚动更新的， 如果用户平时不注意维护是很容易滚挂的，但是如果你是一个有心人，平时注意定期<a href="https://wiki.archlinux.org/index.php/System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="external">维护</a> 和<a href="https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" target="_blank" rel="external">备份</a> ，并且在你每次更新系统前留意<a href="https://www.archlinux.org/feeds/news/" target="_blank" rel="external">archlinux新闻</a> 的话, 并不需要担心滚挂的问题。网上也有很多人，安装了一次后可以用上很多年，比ubuntu LTS版用的还长。
+</p>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      
+&lt;div id=&quot;outline-container-orgheadline1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgheadline1&quot;&gt;为什么选择archlinux?&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text
+    
+    </summary>
+    
+      <category term="archlinux" scheme="http://summerisgreen.com/categories/archlinux/"/>
+    
+    
+      <category term="archlinux" scheme="http://summerisgreen.com/tags/archlinux/"/>
     
   </entry>
   
