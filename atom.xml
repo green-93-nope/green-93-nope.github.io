@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2016-10-01T13:43:56.363Z</updated>
+  <updated>2016-11-27T06:43:15.051Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -14,6 +14,197 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>巧用异或找出唯一出现奇数次的数字</title>
+    <link href="http://summerisgreen.com//blog/2016-11-26-2016-11-26-%E5%B7%A7%E7%94%A8%E5%BC%82%E6%88%96%E6%89%BE%E5%87%BA%E5%94%AF%E4%B8%80%E5%87%BA%E7%8E%B0%E5%A5%87%E6%95%B0%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97.html"/>
+    <id>http://summerisgreen.com//blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html</id>
+    <published>2016-11-25T16:00:00.000Z</published>
+    <updated>2016-11-27T06:43:15.051Z</updated>
+    
+    <content type="html"><![CDATA[
+<div id="outline-container-org9faffeb" class="outline-2">
+<h2 id="org9faffeb">由来</h2>
+<div class="outline-text-2" id="text-org9faffeb">
+<p>
+虽然之前已经看到过几次使用异或操作的神奇解法，
+但今天刷微博遇见了类似的题时，在脑中出现的还是一些“蠢办法”。
+</p>
+
+<p>
+为了更好的理解这类题目的解题思路，
+决定在这里梳理一下异或操作所使用的基本数学原理以及使用该方法的一些常见的应用。
+</p>
+
+<p>
+<a id="more"></a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org482c00c" class="outline-2">
+<h2 id="org482c00c">异或方法的基本原理</h2>
+<div class="outline-text-2" id="text-org482c00c">
+<p>
+在维基百科中异或是这样定义的：在数字逻辑中，逻辑算符互斥（exclusive or）是对两个运算元的一种逻辑分析类型。
+而基于二进制的计算机中的信息操作就可以看作是一堆进行数字逻辑操作的信息。
+这也是异或操作在计算机中的运算速度非常快的一个原因。
+</p>
+
+<p>
+在数字逻辑中的运算方法有很多，而异或方法却能产生一些看似很奇妙的应用，
+这主要是因为它具有的数学上的一些特性：
+</p>
+<ul class="org-ul">
+<li>交换率：A^B=B^A</li>
+<li>结合率：A^B^C=A^(B^C)</li>
+<li>归零率：A^A=0</li>
+<li>自反：A^B^B=A</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org01408ff" class="outline-2">
+<h2 id="org01408ff">异或方法的一些简单的应用</h2>
+<div class="outline-text-2" id="text-org01408ff">
+<p>
+知道了异或的数学性质之后，就可以发现下面两道题目使用异或操作非常简单了。
+</p>
+</div>
+
+<div id="outline-container-orgbde1dae" class="outline-3">
+<h3 id="orgbde1dae">快速比较两个数的值是否相等</h3>
+<div class="outline-text-3" id="text-orgbde1dae">
+<p>
+在对时间和空间效率要求非常高的计算机底层编程中，
+经常会看到有汇编程序利用异或的归零率的特性，快速比较两个数的值是否相等。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">a^b == 0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2baadc5" class="outline-3">
+<h3 id="org2baadc5">不使用其他空间交换两个数的值</h3>
+<div class="outline-text-3" id="text-org2baadc5">
+<p>
+应用异或操作的自反的性质，就可以在不使用额外空间的前提下交换两个数的值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">a</span> = a^b
+<span style="color: #6c71c4;">b</span> = a^b
+<span style="color: #6c71c4;">a</span> = a^b
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga1927de" class="outline-2">
+<h2 id="orga1927de">一些奇妙的应用</h2>
+<div class="outline-text-2" id="text-orga1927de">
+<p>
+除了在上面这些简单的问题上，可以使用异或操作的小技巧，并且使程序的时间和空间效率得到改善以外。
+异或方法还可以在一些较为复杂的问题上得到应用，
+比如下面将会介绍的用来在一组数中找出唯一一个只出现了奇数次的数字这一系列问题。
+</p>
+</div>
+
+<div id="outline-container-org0fd9e49" class="outline-3">
+<h3 id="org0fd9e49">校招之找出未打卡员工题</h3>
+<div class="outline-text-3" id="text-org0fd9e49">
+<p>
+今天看到的是一道可以使用该种方法的很简单的校招笔试题目。
+</p>
+
+<pre class="example">
+题目：输入两行数据，第一行为全部员工的 id，第二行为某一天打卡的员工 id，
+已知只有一个员工没有打卡，求出未打卡员工的 id。（员工 id 不重复，每行输入的 id 未排序）
+
+输入：
+1001 1003 1002 1005 1004
+1002 1003 1001 1004
+
+输出：
+1005
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6b8190b" class="outline-3">
+<h3 id="org6b8190b">leetcode之Single Number III</h3>
+<div class="outline-text-3" id="text-org6b8190b">
+<p>
+之前在leetcode上也看到过一个使用异或方法将会非常简单的题目，时间和空间复杂度分别为O(n)和O(1)。
+</p>
+
+<pre class="example">
+Given an array of numbers nums,
+in which exactly two elements appear only once and
+all the other elements appear exactly twice.
+
+Find the two elements that appear only once.
+</pre>
+
+<p>
+<!-- more -->
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org95bb5aa" class="outline-2">
+<h2 id="org95bb5aa">参考</h2>
+<div class="outline-text-2" id="text-org95bb5aa">
+<p>
+<a href="https://en.wikipedia.org/wiki/Exclusive_or" target="_blank" rel="external">Exclusive or</a>
+</p>
+
+<p>
+<a href="https://www.lijinma.com/blog/2014/05/29/amazing-xor/" target="_blank" rel="external">感受异或的神奇</a>
+</p>
+
+<p>
+<a href="http://www.alijava.com/campus-interview/" target="_blank" rel="external">2017互联网校招的一些面试题</a>
+</p>
+
+<p>
+<a href="https://leetcode.com/problems/single-number-iii/" target="_blank" rel="external">Single Number III</a>
+</p>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;outline-container-org9faffeb&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org9faffeb&quot;&gt;由来&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org9faffeb&quot;&gt;
+&lt;p&gt;
+虽然之前已经看到过几次使用异或操作的神奇解法，
+但今天刷微博遇见了类似的题时，在脑中出现的还是一些“蠢办法”。
+&lt;/p&gt;
+
+&lt;p&gt;
+为了更好的理解这类题目的解题思路，
+决定在这里梳理一下异或操作所使用的基本数学原理以及使用该方法的一些常见的应用。
+&lt;/p&gt;
+
+&lt;p&gt;
+    
+    </summary>
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>使用Hexo和emacs-Org来写博客</title>
