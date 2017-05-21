@@ -17,8 +17,8 @@
   
   <entry>
     <title>巧用异或找出唯一出现奇数次的数字</title>
-    <link href="http://summerisgreen.com//blog/2016-11-26-2016-11-26-%E5%B7%A7%E7%94%A8%E5%BC%82%E6%88%96%E6%89%BE%E5%87%BA%E5%94%AF%E4%B8%80%E5%87%BA%E7%8E%B0%E5%A5%87%E6%95%B0%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97.html"/>
-    <id>http://summerisgreen.com//blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html</id>
+    <link href="http://summerisgreen.com/blog/2016-11-26-2016-11-26-%E5%B7%A7%E7%94%A8%E5%BC%82%E6%88%96%E6%89%BE%E5%87%BA%E5%94%AF%E4%B8%80%E5%87%BA%E7%8E%B0%E5%A5%87%E6%95%B0%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97.html"/>
+    <id>http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html</id>
     <published>2016-11-25T16:00:00.000Z</published>
     <updated>2016-11-27T06:43:15.051Z</updated>
     
@@ -208,8 +208,8 @@ Find the two elements that appear only once.
   
   <entry>
     <title>使用Hexo和emacs-Org来写博客</title>
-    <link href="http://summerisgreen.com//blog/2016-09-30-2016-09-30-%E4%BD%BF%E7%94%A8hexo%E5%92%8Cemacs-org%E6%9D%A5%E5%86%99%E5%8D%9A%E5%AE%A2.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html</id>
+    <link href="http://summerisgreen.com/blog/2016-09-30-2016-09-30-%E4%BD%BF%E7%94%A8hexo%E5%92%8Cemacs-org%E6%9D%A5%E5%86%99%E5%8D%9A%E5%AE%A2.html"/>
+    <id>http://summerisgreen.com/blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html</id>
     <published>2016-09-29T16:00:00.000Z</published>
     <updated>2016-10-01T13:43:56.363Z</updated>
     
@@ -503,8 +503,8 @@ google了下发现org-octopress这个插件来完成这个需求了，emacs丰�
   
   <entry>
     <title>arch下使用aria2下载资源</title>
-    <link href="http://summerisgreen.com//blog/2016-09-25-2016-09-25-arch%E4%B8%8B%E4%BD%BF%E7%94%A8aria2%E4%B8%8B%E8%BD%BD%E8%B5%84%E6%BA%90.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html</id>
+    <link href="http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch%E4%B8%8B%E4%BD%BF%E7%94%A8aria2%E4%B8%8B%E8%BD%BD%E8%B5%84%E6%BA%90.html"/>
+    <id>http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html</id>
     <published>2016-09-24T16:00:00.000Z</published>
     <updated>2016-09-30T13:09:48.401Z</updated>
     
@@ -668,8 +668,8 @@ linux世界中一直没有迅雷这样在windows中文用户中占有统治地�
   
   <entry>
     <title>配置支持中文输入的emacsclient</title>
-    <link href="http://summerisgreen.com//blog/2016-09-24-2016-09-24-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E7%9A%84emacsclient.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html</id>
+    <link href="http://summerisgreen.com/blog/2016-09-24-2016-09-24-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E7%9A%84emacsclient.html"/>
+    <id>http://summerisgreen.com/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html</id>
     <published>2016-09-23T16:00:00.000Z</published>
     <updated>2016-09-30T13:05:40.891Z</updated>
     
@@ -823,8 +823,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
   
   <entry>
     <title>简单的决策方法</title>
-    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%B3%E7%AD%96%E6%96%B9%E6%B3%95.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-简单的决策方法.html</id>
+    <link href="http://summerisgreen.com/blog/2016-09-06-2016-09-06-%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%B3%E7%AD%96%E6%96%B9%E6%B3%95.html"/>
+    <id>http://summerisgreen.com/blog/2016-09-06-2016-09-06-简单的决策方法.html</id>
     <published>2016-09-05T16:00:00.000Z</published>
     <updated>2016-10-01T14:55:01.212Z</updated>
     
@@ -1023,8 +1023,8 @@ value_of_info = value_with_info - value_without_info = $200
   
   <entry>
     <title>转投Archlinux</title>
-    <link href="http://summerisgreen.com//blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
-    <id>http://summerisgreen.com//blog/2016-09-06-2016-09-06-转投archlinux.html</id>
+    <link href="http://summerisgreen.com/blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
+    <id>http://summerisgreen.com/blog/2016-09-06-2016-09-06-转投archlinux.html</id>
     <published>2016-09-05T16:00:00.000Z</published>
     <updated>2016-09-06T11:21:15.135Z</updated>
     
