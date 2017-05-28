@@ -64,9 +64,9 @@
 不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一些额外的配置来解决。
 </p>
 
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1">emacsclient</h2>
-<div class="outline-text-2" id="text-orgheadline1">
+<div id="outline-container-org03ed370" class="outline-2">
+<h2 id="org03ed370">emacsclient</h2>
+<div class="outline-text-2" id="text-org03ed370">
 <p>
 emacsclient的原理十分简单，就是预先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
 这样就免去了最耗时的每次启动时的加载配置，十分快速的同时还拥有你自定义的配置。
@@ -77,9 +77,8 @@ emacsclient的原理十分简单，就是预先启动一个emacs作为守护进�
 </p>
 
 <div class="org-src-container">
-
-<pre class="src src-bash">$ emacsclient -t -a <span style="color: #2aa198;">""</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
-$ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
+<pre class="src src-bash">$ emacsclient -t -a <span style="color: #2d9574;">""</span>  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
+$ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
 </pre>
 </div>
 <p>
@@ -94,16 +93,15 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </div>
 </div>
 
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2">新窗口中支持中文字体</h2>
-<div class="outline-text-2" id="text-orgheadline2">
+<div id="outline-container-org6d8c6e1" class="outline-2">
+<h2 id="org6d8c6e1">新窗口中支持中文字体</h2>
+<div class="outline-text-2" id="text-org6d8c6e1">
 <p>
 因为在emacs中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
 所以要想在emacsclient中正确的显示中文字体必须要添加一些额外的设置。
 </p>
 
 <div class="org-src-container">
-
 <pre class="src src-emacs">(setq window-system-default-frame-alist
       '(
         ;; if frame created on x display
@@ -130,17 +128,16 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3">用户环境变量配置</h2>
-<div class="outline-text-2" id="text-orgheadline3">
+<div id="outline-container-orgbc72cff" class="outline-2">
+<h2 id="orgbc72cff">用户环境变量配置</h2>
+<div class="outline-text-2" id="text-orgbc72cff">
 <p>
 一般言系统环境中LC_CTYPE默认设置为英文，此时在Emacs上可能无法使用输入法。为了能够支持fcitx的输入，在启动Emacs时需要指定LC_CTYPE为zh_CN.UTF-8。
 使用下面的命令进行，就可以使用支持fcitx中文输入的emacs:
 </p>
 
 <div class="org-src-container">
-
-<pre class="src src-bash">$ <span style="color: #6c71c4;">LC_CTYPE</span>=zh_CN.UTF-8 emacs
+<pre class="src src-bash">$ <span style="color: #7590db;">LC_CTYPE</span>=zh_CN.UTF-8 emacs
 </pre>
 </div>
 
@@ -150,11 +147,10 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </p>
 
 <div class="org-src-container">
-
-<pre class="src src-bash"><span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">emacs</span>=<span style="color: #2aa198;">'LC_CTYPE=zh_CN.UTF-8 emacs'</span>
-<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">em</span>=<span style="color: #2aa198;">'emacsclient -t -a ""'</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
-<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">emc</span>=<span style="color: #2aa198;">'LC_CTYPE=zh_CN.UTF-8 emacsclient -nc -a ""'</span>  <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
-<span style="color: #6c71c4;">export</span> <span style="color: #6c71c4;">EDITOR</span>=<span style="color: #2aa198;">"$(if [[ -n $DISPLAY ]]; then echo 'LC_CTYPE=zh_CN.UTF-8 emacsclient -a ""'; else echo 'vi'; fi)"</span>
+<pre class="src src-bash"><span style="color: #4f97d7;">alias</span> <span style="color: #7590db;">emacs</span>=<span style="color: #2d9574;">'LC_CTYPE=zh_CN.UTF-8 emacs'</span>
+<span style="color: #4f97d7;">alias</span> <span style="color: #7590db;">em</span>=<span style="color: #2d9574;">'emacsclient -t -a ""'</span>  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">&#22312;&#32456;&#31471;&#20013;&#24320;&#21551;emacs</span>
+<span style="color: #4f97d7;">alias</span> <span style="color: #7590db;">emc</span>=<span style="color: #2d9574;">'LC_CTYPE=zh_CN.UTF-8 emacsclient -nc -a ""'</span>  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">&#21551;&#21160;emacs&#22270;&#24418;&#30028;&#38754;</span>
+<span style="color: #4f97d7;">export</span> <span style="color: #7590db;">EDITOR</span>=<span style="color: #2d9574;">"$(if [[ -n $DISPLAY ]]; then echo 'LC_CTYPE=zh_CN.UTF-8 emacsclient -a ""'; else echo 'vi'; fi)"</span>
 </pre>
 </div>
 
@@ -163,9 +159,9 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline4" class="outline-2">
-<h2 id="orgheadline4">参考</h2>
-<div class="outline-text-2" id="text-orgheadline4">
+<div id="outline-container-org20f07f0" class="outline-2">
+<h2 id="org20f07f0">参考</h2>
+<div class="outline-text-2" id="text-org20f07f0">
 <p>
 1.<a href="https://wiki.archlinux.org/index.php/Emacs_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="external">Emacs&#x2013;archwiki</a>
 </p>
@@ -199,8 +195,8 @@ $ emacsclient -nc -a <span style="color: #2aa198;">""</span>  <span style="color
     
     <span class="page-number">•</span>
     
-    <a class="older-posts" href="/blog/2016-09-06-2016-09-06-简单的决策方法.html">
-        <!--简单的决策方法--> next →
+    <a class="older-posts" href="/blog/2016-09-06-2016-09-06-转投archlinux.html">
+        <!--转投Archlinux--> next →
     </a>
     
 </nav>
