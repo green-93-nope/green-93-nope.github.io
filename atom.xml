@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2017-05-28T14:37:45.439Z</updated>
+  <updated>2017-07-06T00:13:33.856Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -20,27 +20,13 @@
     <link href="http://summerisgreen.com/blog/2016-11-26-2016-11-26-%E5%B7%A7%E7%94%A8%E5%BC%82%E6%88%96%E6%89%BE%E5%87%BA%E5%94%AF%E4%B8%80%E5%87%BA%E7%8E%B0%E5%A5%87%E6%95%B0%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97.html"/>
     <id>http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html</id>
     <published>2016-11-25T16:00:00.000Z</published>
-    <updated>2017-05-28T14:37:45.439Z</updated>
+    <updated>2017-07-06T00:13:33.856Z</updated>
     
-    <content type="html"><![CDATA[
-<div id="outline-container-org232da2f" class="outline-2">
-<h2 id="org232da2f">由来</h2>
-<div class="outline-text-2" id="text-org232da2f">
-<p>
-虽然之前已经看到过几次使用异或操作的神奇解法，
-但今天刷微博遇见了类似的题时，在脑中出现的还是一些“蠢办法”。
-</p>
-
-<p>
-为了更好的理解这类题目的解题思路，
-决定在这里梳理一下异或操作所使用的基本数学原理以及使用该方法的一些常见的应用。
-</p>
-
-<p>
+    <content type="html"><![CDATA[<p>
+异或操作看似是数字逻辑的一个很简单的运算方法，
+但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。
 <a id="more"></a>
 </p>
-</div>
-</div>
 
 <div id="outline-container-org8222f41" class="outline-2">
 <h2 id="org8222f41">异或方法的基本原理</h2>
@@ -182,20 +168,9 @@ Find the two elements that appear only once.
     
     <summary type="html">
     
-      &lt;div id=&quot;outline-container-org232da2f&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org232da2f&quot;&gt;由来&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org232da2f&quot;&gt;
-&lt;p&gt;
-虽然之前已经看到过几次使用异或操作的神奇解法，
-但今天刷微博遇见了类似的题时，在脑中出现的还是一些“蠢办法”。
-&lt;/p&gt;
-
-&lt;p&gt;
-为了更好的理解这类题目的解题思路，
-决定在这里梳理一下异或操作所使用的基本数学原理以及使用该方法的一些常见的应用。
-&lt;/p&gt;
-
-&lt;p&gt;
+      &lt;p&gt;
+异或操作看似是数字逻辑的一个很简单的运算方法，
+但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。
     
     </summary>
     
@@ -504,26 +479,43 @@ google了下发现org-octopress这个插件来完成这个需求了，emacs丰�
     <link href="http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch%E4%B8%8B%E4%BD%BF%E7%94%A8aria2%E4%B8%8B%E8%BD%BD%E8%B5%84%E6%BA%90.html"/>
     <id>http://summerisgreen.com/blog/2016-09-25-2016-09-25-arch下使用aria2下载资源.html</id>
     <published>2016-09-24T16:00:00.000Z</published>
-    <updated>2017-05-28T14:37:46.539Z</updated>
+    <updated>2017-07-06T00:36:46.082Z</updated>
     
     <content type="html"><![CDATA[<p>
-linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
-本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
-后来经过一番调研，终于找到了一款满意的下载工具&#x2013;aria2。
+linux 中拥有大量的下载工具，不过没有一个像迅雷那样在windows中文世界中占有统治地位。
+对于一般 linux 用户常用的下载工具，比如gnome和kde等桌面环境中自带的 utorrent 或 ktorrent ，
+自身下载速度不快，还有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然是难以接受的。
+</p>
+
+<p>
+而 aria2 作为一个轻型的，多协议支持的下载工具，而且还拥有很多实用的扩展工具，
+可以说是 linux 下一个杀手级的下载工具。
+</p>
+
+<p>
+不过 aria2 不像一般的下载工具那样开箱即用；
+它的安装和配置自定义的程度高，
+并且是需要花点功夫来折腾下的，
+可以说是一款偏 geek 的下载工具。
 </p>
 
 <div id="outline-container-org47f6d62" class="outline-2">
 <h2 id="org47f6d62">aria2是什么？</h2>
 <div class="outline-text-2" id="text-org47f6d62">
 <p>
-aria2是一款轻量级的、支持多协议的和多个下载源的下载工具，支持HTTP/HTTPS，FTP，SFTP，BitTorrent以及Metalink等协议的下载。
+aria2是一款轻量级的、支持多协议的和多个下载源的下载工具，它能够支持HTTP/HTTPS，FTP，SFTP，BitTorrent以及Metalink这么多协议的下载。
 具体介绍可参照<a href="https://aria2.github.io/" target="_blank" rel="external">aria2官网</a>。
 </p>
 
 <p>
-我想在这里强调一下它的两个非常惊艳的优点：一个是轻量级：占用内存空间十分少，通常只占用4-9MB。
+除了丰富的协议支持，它还有两个非常惊艳的优点：一个是轻量级：占用内存空间十分少，通常只占用4-9MB。
 另一个优势就是支持RPC界面远程控制，可以很方便的对被配置为服务器的主机进行下载管理。
 可以说对于linux主机来说是一款绝佳的下载工具。
+</p>
+
+<p>
+用了一段时间后，还是非常满意这个小巧易用的下载工具；
+唯一的一点遗憾就是不能下载迅雷链接，每次搜老电影都只能找到迅雷链接的我真是快哭了。
 </p>
 
 <p>
@@ -539,7 +531,8 @@ aria2是一款轻量级的、支持多协议的和多个下载源的下载工具
 <h3 id="org942d845">安装aria2</h3>
 <div class="outline-text-3" id="text-org942d845">
 <p>
-由于aria2已经在archlinux的官方仓库中，所以安装十分方便，直接在命令行中使用pacman包管理工具进行安装即可:
+aria2 作为 linux 下常用的下载工具，一般的发行版仓库中都会有该软件的包，可以使用包管理系统直接安装。
+比如在 archlinux 中，可以使用如下的命令直接安装：
 </p>
 
 <div class="org-src-container">
@@ -549,7 +542,11 @@ aria2是一款轻量级的、支持多协议的和多个下载源的下载工具
 
 <p>
 此时已经可以直接通过命令行运行aria2来进行下载，不过并不推荐。
-因为相对于每次都通过命令行参数来对断点续传或者速度限制等功能进行说明的方法来说，有着更好的替代方案&#x2013;使用配置文件启动aria2服务，再通过web图形前端进行管理。
+因为这样每次都需要使用命令行参数来对断点续传或者速度限制等功能进行说明，并且下载管理也是不太方便。
+</p>
+
+<p>
+这里推荐使用配置文件启动aria2服务，再通过web图形前端进行管理的优秀实践。
 </p>
 </div>
 </div>
@@ -605,7 +602,7 @@ aria2本身并没有图形界面，不过可以通过一些开源的web图形前
 </div>
 
 <p>
-安装完成后在浏览器中打开<a href="http://ziahamza.github.io/webui-aria2/" target="_blank" rel="external">管理页面</a> 即可进行管理，是不是特别简单。
+安装完成后在浏览器中打开<a href="http://ziahamza.github.io/webui-aria2/" target="_blank" rel="external">管理页面</a> 即可进行管理。
 </p>
 </div>
 </div>
@@ -614,7 +611,7 @@ aria2本身并没有图形界面，不过可以通过一些开源的web图形前
 <h3 id="org5eb2eeb">更多</h3>
 <div class="outline-text-3" id="text-org5eb2eeb">
 <p>
-aria2并不只是一个简单的下载工具，你还可以用它来：
+对于中国用户还有个福音，那就是有人已经开发出了浏览器插件来支持直接下载百度云和迅雷离线的内容，是不是瞬间感觉到逼格慢慢。
 </p>
 
 <p>
@@ -649,8 +646,9 @@ aria2并不只是一个简单的下载工具，你还可以用它来：
     <summary type="html">
     
       &lt;p&gt;
-linux世界中一直没有迅雷这样在windows中文用户中占有统治地位的下载工具，而像gnome和kde等桌面环境中自带的utorrent或ktorrent等下载工具，
-本身下载速度不快，还又有着占用内存资源多，支持下载协议有限的缺点。对于追求简洁高效的系统的人来说，自然
+linux 中拥有大量的下载工具，不过没有一个像迅雷那样在windows中文世界中占有统治地位。
+对于一般 linux 用户常用的下载工具，比如gnome和kde等桌面环境中自带的 utorrent 或 ktorrent ，
+自身下载速度不快，还有着占用内存资源多，支持下
     
     </summary>
     
@@ -666,29 +664,28 @@ linux世界中一直没有迅雷这样在windows中文用户中占有统治地�
     <link href="http://summerisgreen.com/blog/2016-09-24-2016-09-24-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E7%9A%84emacsclient.html"/>
     <id>http://summerisgreen.com/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html</id>
     <published>2016-09-23T16:00:00.000Z</published>
-    <updated>2017-05-28T14:37:46.863Z</updated>
+    <updated>2017-07-06T00:42:14.496Z</updated>
     
     <content type="html"><![CDATA[<p>
-因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
-，所以一直是使用gedit作为替代来进行简单的编辑处理。
+因为习惯了 emacs 的高效编辑，所以一直想要将arch的默认编辑器设置为emacs。
+然而 emacs 每次启动都要加载大量的配置文件，缓慢的打开速度使它很难作为快速的编辑工具来使用。
 </p>
 
 <p>
-最近看到了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
-不过在将其配置为支持中文输入的过程中遇到了一些麻烦，需要一些额外的配置来解决。
+最近发现了一个非常不错的通过使用emacsclient来快速启动新的emacs窗口的解决方案。
+并且通过一些额外的设置可以很好地支持中文输入。
 </p>
 
 <div id="outline-container-org03ed370" class="outline-2">
 <h2 id="org03ed370">emacsclient</h2>
 <div class="outline-text-2" id="text-org03ed370">
 <p>
-emacsclient的原理十分简单，就是预先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
+emacsclient 的原理十分简单，就是预先启动一个emacs作为守护进程，每次想要进行一个新的编辑时，就打开一个窗口并链接到守护进程。
 这样就免去了最耗时的每次启动时的加载配置，十分快速的同时还拥有你自定义的配置。
 </p>
 
 <p>
-对于emacs英文用户来说，在终端下直接运行如下命令即可打开终端下的或者带有图形界面的emacs客户端。
+对于emacs英文用户来说，在终端下直接运行如下命令即可打开终端下的或者带有图形界面的 emacs 客户端。
 </p>
 
 <div class="org-src-container">
@@ -698,11 +695,11 @@ $ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color
 </div>
 <p>
 其中-a ""参数表示，当第一次运行这个命令时，它会把emacs当作守护进程来启动，之后就会一直驻留在后台。
-等到再次使用emacsclient时，就会把新建的窗口链接到该守护程序实现快速启动。
+等到再次使用 emacsclient 时，就会把新建的窗口链接到该守护程序实现快速启动。
 </p>
 
 <p>
-但是对于中文用户来说，进入后就会发现会遇到中文乱码，fcitx输入法无法被激活的问题。
+但是对于中文用户来说，进入后就会发现会遇到中文乱码，fcitx 输入法无法被激活的问题。
 不过可以通过下面这些额外的设置来解决这两个问题。
 </p>
 </div>
@@ -712,8 +709,8 @@ $ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color
 <h2 id="org6d8c6e1">新窗口中支持中文字体</h2>
 <div class="outline-text-2" id="text-org6d8c6e1">
 <p>
-因为在emacs中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
-所以要想在emacsclient中正确的显示中文字体必须要添加一些额外的设置。
+因为在 emacs 中关于界面和字体的设置只有在创建新的frame时才有效，而启动服务器的时候并没有创建frame。
+所以要想在 emacsclient 中正确的显示中文字体必须要添加一些额外的设置。
 </p>
 
 <div class="org-src-container">
@@ -740,6 +737,10 @@ $ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color
       )
 </pre>
 </div>
+
+<p>
+对于 spacemacs 用户来说，默认的配置已经解决了新窗口的字体问题，所以不需要再进行额外的设置了。
+</p>
 </div>
 </div>
 
@@ -795,13 +796,12 @@ $ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color
     <summary type="html">
     
       &lt;p&gt;
-因为习惯了emacs的快捷键，所以一直想要将arch的默认编辑器设置为emacs。
-但是emacs每次启动都要加载大量的配置文件，非常慢的打开速度使它很难作为快速的编辑工具来使用
-，所以一直是使用gedit作为替代来进行简单的编辑处理。
+因为习惯了 emacs 的高效编辑，所以一直想要将arch的默认编辑器设置为emacs。
+然而 emacs 每次启动都要加载大量的配置文件，缓慢的打开速度使它很难作为快速的编辑工具来使用。
 &lt;/p&gt;
 
 &lt;p&gt;
-最近看到了一个
+最近发现了一个非常不错的通过使用emacsclient来快速启
     
     </summary>
     
@@ -817,31 +817,38 @@ $ emacsclient -nc -a <span style="color: #2d9574;">""</span>  <span style="color
     <link href="http://summerisgreen.com/blog/2016-09-06-2016-09-06-%E8%BD%AC%E6%8A%95archlinux.html"/>
     <id>http://summerisgreen.com/blog/2016-09-06-2016-09-06-转投archlinux.html</id>
     <published>2016-09-05T16:00:00.000Z</published>
-    <updated>2017-05-28T14:37:47.036Z</updated>
+    <updated>2017-07-06T00:33:43.109Z</updated>
     
     <content type="html"><![CDATA[
 <div id="outline-container-orgfa2313a" class="outline-2">
 <h2 id="orgfa2313a">为什么选择archlinux?</h2>
 <div class="outline-text-2" id="text-orgfa2313a">
 <p>
-在linux众多的发行版中， 除了arch外我之前还用过 opensuse 和 ubuntu这两款系统。这两款发行版可以说是在linux世界中极其出名的， 而且不管是它们的易用性还是制作的精良度在linux的发行版中也都是名列前矛的。但是尽管它们如此优秀，它们还是有一些缺点让我难以忍受， 最终做出了弃用的选择。
+在使用 archlinux 之前，我还使用过 opensuse 和 ubuntu 这两款普及率比较高的 linux 发行版。
 </p>
 
 <p>
-产于德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但永久了之后你就会发现它也有很多缺点让你无法忍受：
+来自德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但却有着一些让你不得不放弃的缺点:
 </p>
-<ol class="org-ol">
+<ul class="org-ul">
 <li>由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都会被它的慢性子给急死。</li>
-<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样竟然还出现了python-matplotlib这个使用应该非常多的包出现了打包错误无法使用这种情况。。。</li>
+<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样，python-matplotlib这个科学计算必备的包竟然还出现了打包错误。。。</li>
 <li>opensuse采用的kde桌面虽然是非常华丽， 但是bug率也是让人无法忍受, 时常会出现桌面崩溃的情况， 这对于作为日常工作使用的系统来说可以说是致命的缺陷。也正因此我继而选择改用ubuntu。</li>
-</ol>
+</ul>
 
 <p>
-ubuntu可以说是当前linux世界最为流行的发行版了， 它的优点也是让你用了就很容易感受出（比如开箱即用，强大的包管理等），并继而产生一定的依赖性。 作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。不过这个开箱即用的设计理念也对想要尝试自己DRY的人带来很多的问题。如果你想要尝试一些轻量级的桌面环境的话，你会发现自己要解决大量的和ubuntu unity之间的冲突。如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有几个无法解决，搜索引擎也找不到有用的解决方案。在这种时候一个想要自己配置一个简洁而又能极大提高生产力的系统的我，又再次选择更换操作系统。
+ubuntu作为linux世界最为人熟知的发行版了， 它拥有开箱即用，丰富的软件支持等相当给力的优点。
+这些优点从win平台转来的新手十分容易上手，而且在日常的使用中也是让人非常省心的。
+作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。
+不过这个开箱即用的设计理念也却对想要尝试自己DRY的geek来说带来很多的问题:
 </p>
+<ul class="org-ul">
+<li>作为一个想要提高生产力的程序员，如果你想要使用一些平铺式的窗口管理器，你会发现自己要解决大量的和ubuntu unity之间的冲突。</li>
+<li>如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有一些通过搜索引擎也找不到有用的解决方案。</li>
+</ul>
 
 <p>
-这次经过在google和知乎的一番调研，最终决定使用archlinux。至于理由的话我想有下面几点：
+在成长为一个实用主义的程序员的过程中，我发现自己需要的是一个简单易用，而且又能很好地支持全键盘操作这种高生产力操作方式的操作系统。经过在google和知乎的一番调研，我最终选择了 archlinux。它除了满足我的需求之外，还有着以下几个优点：
 </p>
 </div>
 
