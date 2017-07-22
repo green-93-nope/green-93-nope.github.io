@@ -237,40 +237,36 @@ Each number in C may only be used once in the combination.
 </div>
 </div>
 
-<div id="outline-container-org000f965" class="outline-4">
-<h4 id="org000f965">Permutations II</h4>
-<div class="outline-text-4" id="text-org000f965">
+<div id="outline-container-org2c05b0a" class="outline-4">
+<h4 id="org2c05b0a">Subsets II</h4>
+<div class="outline-text-4" id="text-org2c05b0a">
 <pre class="example">
-Given a collection of numbers that might contain duplicates, return all possible unique permutations. 
+Given a collection of integers that might contain duplicates, nums, return all possible subsets. 
 </pre>
 
+<p>
+该题目除了没有了 target 目标的约束之外，和之前的题目类似。
+在实际求解的过程中，只要将之前的解放中和 target 相关的表达式删去即可。
+</p>
+
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">perUn</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums<span style="color: #4f97d7;">)</span>:
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> == <span style="color: #a45bad;">0</span>:
-        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[]</span><span style="color: #4f97d7;">]</span>
-
-    <span style="color: #7590db;">i</span> = <span style="color: #a45bad;">0</span>
-    <span style="color: #7590db;">ans</span> = <span style="color: #4f97d7;">[]</span>
-    <span style="color: #4f97d7; font-weight: bold;">while</span> i &lt; <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span>:
-        <span style="color: #7590db;">res</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>.perUn<span style="color: #4f97d7;">(</span>nums<span style="color: #bc6ec5;">[</span>:i<span style="color: #bc6ec5;">]</span>+nums<span style="color: #bc6ec5;">[</span>i+<span style="color: #a45bad;">1</span>:<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-        <span style="color: #7590db;">ans</span> += <span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span>nums<span style="color: #2d9574;">[</span>i<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span> + m <span style="color: #4f97d7; font-weight: bold;">for</span> m <span style="color: #4f97d7; font-weight: bold;">in</span> res<span style="color: #4f97d7;">]</span>
-        <span style="color: #7590db;">i</span> += <span style="color: #a45bad;">1</span>
-        <span style="color: #4f97d7; font-weight: bold;">while</span> i &lt; <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">and</span>  <span style="color: #4f97d7;">(</span>nums<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span> == nums<span style="color: #bc6ec5;">[</span>i-<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>:
-            <span style="color: #7590db;">i</span> += <span style="color: #a45bad;">1</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span> ans
-
-
-<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">permuteUnique</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums<span style="color: #4f97d7;">)</span>:
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">subsetsWithDup</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums<span style="color: #4f97d7;">)</span>:
     <span style="color: #2aa1ae;">"""</span>
 <span style="color: #2aa1ae;">    :type nums: List[int]</span>
 <span style="color: #2aa1ae;">    :rtype: List[List[int]]</span>
 <span style="color: #2aa1ae;">    """</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> == <span style="color: #a45bad;">0</span>:
-        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">[]</span>
+    <span style="color: #7590db;">ans</span> = <span style="color: #4f97d7;">[]</span>
 
-    <span style="color: #7590db;">sorted_nums</span> = <span style="color: #4f97d7;">sorted</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7; font-weight: bold;">self</span>.perUn<span style="color: #4f97d7;">(</span>sorted_nums<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">swdIter</span><span style="color: #4f97d7;">(</span>candidates, comb<span style="color: #4f97d7;">)</span>:
+        ans.append<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>i <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> comb<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 
+        <span style="color: #4f97d7; font-weight: bold;">for</span> i, e <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>candidates<span style="color: #4f97d7;">)</span>:
+            <span style="color: #4f97d7; font-weight: bold;">if</span> i &lt; <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">or</span> candidates<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span> != candidates<span style="color: #4f97d7;">[</span>i-<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>:
+                comb.append<span style="color: #4f97d7;">(</span>e<span style="color: #4f97d7;">)</span>
+                swdIter<span style="color: #4f97d7;">(</span>candidates<span style="color: #bc6ec5;">[</span>i+<span style="color: #a45bad;">1</span>:<span style="color: #bc6ec5;">]</span>, comb<span style="color: #4f97d7;">)</span>
+                comb.pop<span style="color: #4f97d7;">()</span>
+    swdIter<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">sorted</span><span style="color: #bc6ec5;">(</span>nums<span style="color: #bc6ec5;">)</span>, <span style="color: #bc6ec5;">[]</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> ans
 </pre>
 </div>
 </div>
@@ -284,7 +280,7 @@ Given a collection of numbers that might contain duplicates, return all possible
 <ol class="org-ol">
 <li><a href="https://segmentfault.com/a/1190000006121957" target="_blank" rel="external">(Leetcode) Backtracking回溯法(又称DFS,递归)全解</a></li>
 <li><a href="https://leetcode.com/problems/combination-sum-ii/#/description" target="_blank" rel="external">leetcode Combination Sum II</a></li>
-<li><a href="https://leetcode.com/problems/permutations-ii/#/description" target="_blank" rel="external">leetcode Permutations II</a></li>
+<li><a href="https://leetcode.com/problems/subsets-ii/#/description" target="_blank" rel="external">leetcode Subsets II</a></li>
 </ol>
 </div>
 </div>
