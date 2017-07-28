@@ -8,7 +8,7 @@
         <link rel="shortcut icon" href="/img/author.png"/>
         <link rel="canonical" href="http://guolinn.com/">
         <link rel="alternate" type="application/rss+xml" title="Green" href="/atom.xml">
-        <title>算法技巧之backtracking | Summer is Green</title>
+        <title>算法技巧-backtracking | Summer is Green</title>
         <meta name="description" content="{{meta_description}}">
 
         <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
@@ -43,13 +43,22 @@
 <article class="post">
   July 7, 2017
   
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/编程技巧/'>编程技巧</a> 
+    
+      <a href='/tags/算法/'>算法</a> 
+    
+    </span>
+  
 
-  <h1 class="post-title">算法技巧之backtracking</h1>
+  <h1 class="post-title">算法技巧-backtracking</h1>
   <section class="post-content article-entry">
     
-<div id="outline-container-org9125273" class="outline-2">
-<h2 id="org9125273">Backtracking 算法</h2>
-<div class="outline-text-2" id="text-org9125273">
+<div id="outline-container-org6f63efa" class="outline-2">
+<h2 id="org6f63efa">Backtracking 算法</h2>
+<div class="outline-text-2" id="text-org6f63efa">
 <p>
 Backtracking（回溯)法是一个实用性非常强的算法，
 它的核心思想正如其名字所蕴含的意思：沿着之前走的路退回到上一个岔路口，然后选择另一条路继续探索。
@@ -73,9 +82,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </p>
 </div>
 </div>
-<div id="outline-container-org3c6f704" class="outline-2">
-<h2 id="org3c6f704">回溯算法的应用</h2>
-<div class="outline-text-2" id="text-org3c6f704">
+<div id="outline-container-org9489fc8" class="outline-2">
+<h2 id="org9489fc8">回溯算法的应用</h2>
+<div class="outline-text-2" id="text-org9489fc8">
 <p>
 在对回溯算法的实际编码过程中，由于递归调用的存在，可以很优雅的方式将回溯算法表示出来，而不需要实现复杂的回撤操作。
 </p>
@@ -94,9 +103,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 而对查找所有可行解的问题，由于通常会需要去除冗余解并对求解过程进行加速，需要针对具体的需求进行适当的变形。
 </p>
 </div>
-<div id="outline-container-org59f83e1" class="outline-3">
-<h3 id="org59f83e1">可行解思路</h3>
-<div class="outline-text-3" id="text-org59f83e1">
+<div id="outline-container-org3b5b83e" class="outline-3">
+<h3 id="org3b5b83e">可行解思路</h3>
+<div class="outline-text-3" id="text-org3b5b83e">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">solve</span><span style="color: #4f97d7;">(</span>node, path<span style="color: #4f97d7;">)</span>:
     <span style="color: #7590db;">path</span> += <span style="color: #4f97d7;">[</span>node<span style="color: #4f97d7;">]</span>
@@ -114,9 +123,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </div>
 </div>
 
-<div id="outline-container-orgb630c84" class="outline-3">
-<h3 id="orgb630c84">最优解思路</h3>
-<div class="outline-text-3" id="text-orgb630c84">
+<div id="outline-container-org0b46871" class="outline-3">
+<h3 id="org0b46871">最优解思路</h3>
+<div class="outline-text-3" id="text-org0b46871">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #7590db;">best</span> = -<span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"inf"</span><span style="color: #4f97d7;">)</span>
 
@@ -136,9 +145,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </div>
 </div>
 
-<div id="outline-container-org5479b12" class="outline-3">
-<h3 id="org5479b12">寻找存在的所有解</h3>
-<div class="outline-text-3" id="text-org5479b12">
+<div id="outline-container-orgedb5741" class="outline-3">
+<h3 id="orgedb5741">寻找存在的所有解</h3>
+<div class="outline-text-3" id="text-orgedb5741">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #7590db;">ans</span> = <span style="color: #4f97d7;">[]</span>
 
@@ -161,9 +170,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 为了满足这个需求需要增加一些额外的操作，具体将结合下面这个来自 leetcode 的题目进行说明。
 </p>
 </div>
-<div id="outline-container-org4482330" class="outline-4">
-<h4 id="org4482330">Combination Sum II</h4>
-<div class="outline-text-4" id="text-org4482330">
+<div id="outline-container-org4e98912" class="outline-4">
+<h4 id="org4e98912">Combination Sum II</h4>
+<div class="outline-text-4" id="text-org4e98912">
 <pre class="example">
 Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
 
@@ -237,9 +246,9 @@ Each number in C may only be used once in the combination.
 </div>
 </div>
 
-<div id="outline-container-org2c05b0a" class="outline-4">
-<h4 id="org2c05b0a">Subsets II</h4>
-<div class="outline-text-4" id="text-org2c05b0a">
+<div id="outline-container-orge66ad13" class="outline-4">
+<h4 id="orge66ad13">Subsets II</h4>
+<div class="outline-text-4" id="text-orge66ad13">
 <pre class="example">
 Given a collection of integers that might contain duplicates, nums, return all possible subsets. 
 </pre>
@@ -274,9 +283,9 @@ Given a collection of integers that might contain duplicates, nums, return all p
 </div>
 </div>
 
-<div id="outline-container-org323d6fe" class="outline-2">
-<h2 id="org323d6fe">参考</h2>
-<div class="outline-text-2" id="text-org323d6fe">
+<div id="outline-container-org4e712c8" class="outline-2">
+<h2 id="org4e712c8">参考</h2>
+<div class="outline-text-2" id="text-org4e712c8">
 <ol class="org-ol">
 <li><a href="https://segmentfault.com/a/1190000006121957" target="_blank" rel="external">(Leetcode) Backtracking回溯法(又称DFS,递归)全解</a></li>
 <li><a href="https://leetcode.com/problems/combination-sum-ii/#/description" target="_blank" rel="external">leetcode Combination Sum II</a></li>
@@ -297,6 +306,10 @@ Given a collection of integers that might contain duplicates, nums, return all p
 </article>
 
 <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2017-07-27-2017-07-27-算法技巧-使用动态规划解决地图路径类问题.html">
+        ← prev <!--算法技巧-使用动态规划解决地图路径类问题-->
+    </a>
     
     <span class="page-number">•</span>
     

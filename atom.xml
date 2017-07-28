@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2017-07-22T01:29:41.640Z</updated>
+  <updated>2017-07-28T04:06:02.316Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -16,16 +16,190 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>算法技巧之backtracking</title>
-    <link href="http://summerisgreen.com/blog/2017-07-07-2017-07-07-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7%E4%B9%8Bbacktracking.html"/>
-    <id>http://summerisgreen.com/blog/2017-07-07-2017-07-07-算法技巧之backtracking.html</id>
-    <published>2017-07-06T16:00:00.000Z</published>
-    <updated>2017-07-22T01:29:41.640Z</updated>
+    <title>算法技巧-使用动态规划解决地图路径类问题</title>
+    <link href="http://summerisgreen.com/blog/2017-07-27-2017-07-27-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7-%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%A7%A3%E5%86%B3%E5%9C%B0%E5%9B%BE%E8%B7%AF%E5%BE%84%E7%B1%BB%E9%97%AE%E9%A2%98.html"/>
+    <id>http://summerisgreen.com/blog/2017-07-27-2017-07-27-算法技巧-使用动态规划解决地图路径类问题.html</id>
+    <published>2017-07-26T16:00:00.000Z</published>
+    <updated>2017-07-28T04:06:02.316Z</updated>
     
     <content type="html"><![CDATA[
-<div id="outline-container-org9125273" class="outline-2">
-<h2 id="org9125273">Backtracking 算法</h2>
-<div class="outline-text-2" id="text-org9125273">
+<div id="outline-container-org56e4fd7" class="outline-2">
+<h2 id="org56e4fd7">栅格化的有向图类问题</h2>
+<div class="outline-text-2" id="text-org56e4fd7">
+<p>
+对于图论的路径寻找问题，比较经典的解法就是Dijkstra 和 A*算法了。
+这两种方法虽然通用，但编码实现比较复杂。
+如果对这类问题中比较简单的一些问题也采用这种解法的话，就有点用大炮打蚊子的感觉了。
+</p>
+
+<p>
+这里面的一类简单问题就是在栅格化了的有向图中进行搜索，因为其探索路径比较固定，一般为向右和向下，
+所以可以直接使用动态规划来进行求解。
+</p>
+
+<p>
+下面将结合leetcode题目来进行具体的讲解。
+</p>
+</div>
+</div>
+<div id="outline-container-org7ee0300" class="outline-2">
+<h2 id="org7ee0300">Minimum Path Sum</h2>
+<div class="outline-text-2" id="text-org7ee0300">
+<pre class="example">
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+</pre>
+
+<p>
+对于最短路径问题，假设我们有一个 \(m*n\) 的cost矩阵，这个矩阵中每个点表示的是从起始点到该点的最小路径的值。
+矩阵中值的迭代过程可以使用下面的公式来表示：\(cost(i,j) = min(cost(i-1,j), cost(i,j-1)) + grid[i][j]\) 。
+有了这个迭代公式，我们就可以使用动态规划方法来求解这个最短路径的问题了。
+</p>
+
+<p>
+在编码之前，我们通过观察可以发现，在实际计算cost时，我们只需要当前行中的前一列中的元素和前一行中当前列的元素，
+因此我们实际需要的只是两个n维向量而不是 \(m*n\) 的矩阵。
+我们将这两个向量命名为 pre 和 cur，它们分别表示前一行和当前行向量。
+利用这两个向量，我们将之前的迭代公式转化为：$cur(j) = min(cur(j-1),pre(j)) + grid[i][j]$。
+</p>
+
+<p>
+在编码求解该问题的过程中，一个比较麻烦的细节就是对边界问题的处理了。
+可以使用的一个技巧就是给这两个向量的头部增加一个节点作为哨兵节点。
+这里将 cur 的第一个节点设置为 $&infin;$，保证最左端的节点只会采用从前一行过来的路径。
+而第一行需要特殊处理，因为他们都只存在从左边过来的路径，这里将 pre 的第一个元素设置为0，从而保证了元素值的正确性。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">minPathSum</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, grid<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type grid: List[List[int]]</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">height</span>, <span style="color: #7590db;">length</span> = <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>grid<span style="color: #4f97d7;">)</span>, <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>grid<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>length+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">cur</span> = <span style="color: #4f97d7;">[</span><span style="color: #4f97d7;">float</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"inf"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>length+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>length<span style="color: #4f97d7;">)</span>:
+        <span style="color: #7590db;">pre</span><span style="color: #4f97d7;">[</span>i+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = pre<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span> + grid<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">][</span>i<span style="color: #4f97d7;">]</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>, height<span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>length<span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">cur</span><span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = <span style="color: #4f97d7;">min</span><span style="color: #4f97d7;">(</span>cur<span style="color: #bc6ec5;">[</span>j<span style="color: #bc6ec5;">]</span>, pre<span style="color: #bc6ec5;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span> + grid<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">][</span>j<span style="color: #4f97d7;">]</span>
+        <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span>i <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> cur<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> pre<span style="color: #4f97d7;">[</span>length<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org54a7b99" class="outline-2">
+<h2 id="org54a7b99">Unique Paths</h2>
+<div class="outline-text-2" id="text-org54a7b99">
+<pre class="example">
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+How many possible unique paths are there?
+</pre>
+
+<p>
+这个问题的基本迭代公式为 $paths(i,j) = paths(i-1,j) + paths(i,j-1)$，其解决思路和上一题的一致，只是初始化和边界条件的设置更加简单。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">uniquePaths</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, m, n<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type m: int</span>
+<span style="color: #2aa1ae;">    :type n: int</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>n+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">cur</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>n+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span>:
+        <span style="color: #7590db;">pre</span><span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>,m<span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>n<span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">cur</span><span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = cur<span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> + pre<span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+        <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span>mem <span style="color: #4f97d7; font-weight: bold;">for</span> mem <span style="color: #4f97d7; font-weight: bold;">in</span> cur<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> pre<span style="color: #4f97d7;">[</span>n<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7bd04af" class="outline-2">
+<h2 id="org7bd04af">Unique Paths II</h2>
+<div class="outline-text-2" id="text-org7bd04af">
+<pre class="example">
+Follow up for "Unique Paths":
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+</pre>
+
+<p>
+如果路径中是存在障碍物的话，基本思路和之前的题目依旧相同，只是要在每个迭代中加一个将障碍物点上的路径值设为0的语句即可。
+具体的解法如下面的Python代码所示。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">uniquePathsWithObstacles</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, obstacleGrid<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type obstacleGrid: List[List[int]]</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">height</span>, <span style="color: #7590db;">length</span> = <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>obstacleGrid<span style="color: #4f97d7;">)</span>, <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>obstacleGrid<span style="color: #bc6ec5;">[</span><span style="color: #a45bad;">0</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>length +<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">cur</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>length +<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">pre</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>length<span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">if</span> obstacleGrid<span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">][</span>i<span style="color: #4f97d7;">]</span> == <span style="color: #a45bad;">1</span>:
+            <span style="color: #7590db;">pre</span><span style="color: #4f97d7;">[</span>i+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">0</span>
+        <span style="color: #4f97d7; font-weight: bold;">else</span>:
+            <span style="color: #7590db;">pre</span><span style="color: #4f97d7;">[</span>i+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = pre<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>, height<span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>length<span style="color: #4f97d7;">)</span>:
+            <span style="color: #4f97d7; font-weight: bold;">if</span> obstacleGrid<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">][</span>j<span style="color: #4f97d7;">]</span> == <span style="color: #a45bad;">1</span>:
+                <span style="color: #7590db;">cur</span><span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">0</span>
+            <span style="color: #4f97d7; font-weight: bold;">else</span>:
+                <span style="color: #7590db;">cur</span><span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span> = cur<span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> + pre<span style="color: #4f97d7;">[</span>j+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+
+        <span style="color: #7590db;">pre</span> = <span style="color: #4f97d7;">[</span>i <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> cur<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> pre<span style="color: #4f97d7;">[</span>-<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      
+&lt;div id=&quot;outline-container-org56e4fd7&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org56e4fd7&quot;&gt;栅格化的有向图类问题&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org56e4f
+    
+    </summary>
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+      <category term="算法" scheme="http://summerisgreen.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>算法技巧-backtracking</title>
+    <link href="http://summerisgreen.com/blog/2017-07-07-2017-07-07-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7-backtracking.html"/>
+    <id>http://summerisgreen.com/blog/2017-07-07-2017-07-07-算法技巧-backtracking.html</id>
+    <published>2017-07-06T16:00:00.000Z</published>
+    <updated>2017-07-28T04:05:12.523Z</updated>
+    
+    <content type="html"><![CDATA[
+<div id="outline-container-org6f63efa" class="outline-2">
+<h2 id="org6f63efa">Backtracking 算法</h2>
+<div class="outline-text-2" id="text-org6f63efa">
 <p>
 Backtracking（回溯)法是一个实用性非常强的算法，
 它的核心思想正如其名字所蕴含的意思：沿着之前走的路退回到上一个岔路口，然后选择另一条路继续探索。
@@ -49,9 +223,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </p>
 </div>
 </div>
-<div id="outline-container-org3c6f704" class="outline-2">
-<h2 id="org3c6f704">回溯算法的应用</h2>
-<div class="outline-text-2" id="text-org3c6f704">
+<div id="outline-container-org9489fc8" class="outline-2">
+<h2 id="org9489fc8">回溯算法的应用</h2>
+<div class="outline-text-2" id="text-org9489fc8">
 <p>
 在对回溯算法的实际编码过程中，由于递归调用的存在，可以很优雅的方式将回溯算法表示出来，而不需要实现复杂的回撤操作。
 </p>
@@ -70,9 +244,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 而对查找所有可行解的问题，由于通常会需要去除冗余解并对求解过程进行加速，需要针对具体的需求进行适当的变形。
 </p>
 </div>
-<div id="outline-container-org59f83e1" class="outline-3">
-<h3 id="org59f83e1">可行解思路</h3>
-<div class="outline-text-3" id="text-org59f83e1">
+<div id="outline-container-org3b5b83e" class="outline-3">
+<h3 id="org3b5b83e">可行解思路</h3>
+<div class="outline-text-3" id="text-org3b5b83e">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">solve</span><span style="color: #4f97d7;">(</span>node, path<span style="color: #4f97d7;">)</span>:
     <span style="color: #7590db;">path</span> += <span style="color: #4f97d7;">[</span>node<span style="color: #4f97d7;">]</span>
@@ -90,9 +264,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </div>
 </div>
 
-<div id="outline-container-orgb630c84" class="outline-3">
-<h3 id="orgb630c84">最优解思路</h3>
-<div class="outline-text-3" id="text-orgb630c84">
+<div id="outline-container-org0b46871" class="outline-3">
+<h3 id="org0b46871">最优解思路</h3>
+<div class="outline-text-3" id="text-org0b46871">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #7590db;">best</span> = -<span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"inf"</span><span style="color: #4f97d7;">)</span>
 
@@ -112,9 +286,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 </div>
 </div>
 
-<div id="outline-container-org5479b12" class="outline-3">
-<h3 id="org5479b12">寻找存在的所有解</h3>
-<div class="outline-text-3" id="text-org5479b12">
+<div id="outline-container-orgedb5741" class="outline-3">
+<h3 id="orgedb5741">寻找存在的所有解</h3>
+<div class="outline-text-3" id="text-orgedb5741">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #7590db;">ans</span> = <span style="color: #4f97d7;">[]</span>
 
@@ -137,9 +311,9 @@ Backtracking（回溯)法是一个实用性非常强的算法，
 为了满足这个需求需要增加一些额外的操作，具体将结合下面这个来自 leetcode 的题目进行说明。
 </p>
 </div>
-<div id="outline-container-org4482330" class="outline-4">
-<h4 id="org4482330">Combination Sum II</h4>
-<div class="outline-text-4" id="text-org4482330">
+<div id="outline-container-org4e98912" class="outline-4">
+<h4 id="org4e98912">Combination Sum II</h4>
+<div class="outline-text-4" id="text-org4e98912">
 <pre class="example">
 Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
 
@@ -213,9 +387,9 @@ Each number in C may only be used once in the combination.
 </div>
 </div>
 
-<div id="outline-container-org2c05b0a" class="outline-4">
-<h4 id="org2c05b0a">Subsets II</h4>
-<div class="outline-text-4" id="text-org2c05b0a">
+<div id="outline-container-orge66ad13" class="outline-4">
+<h4 id="orge66ad13">Subsets II</h4>
+<div class="outline-text-4" id="text-orge66ad13">
 <pre class="example">
 Given a collection of integers that might contain duplicates, nums, return all possible subsets. 
 </pre>
@@ -250,9 +424,9 @@ Given a collection of integers that might contain duplicates, nums, return all p
 </div>
 </div>
 
-<div id="outline-container-org323d6fe" class="outline-2">
-<h2 id="org323d6fe">参考</h2>
-<div class="outline-text-2" id="text-org323d6fe">
+<div id="outline-container-org4e712c8" class="outline-2">
+<h2 id="org4e712c8">参考</h2>
+<div class="outline-text-2" id="text-org4e712c8">
 <ol class="org-ol">
 <li><a href="https://segmentfault.com/a/1190000006121957" target="_blank" rel="external">(Leetcode) Backtracking回溯法(又称DFS,递归)全解</a></li>
 <li><a href="https://leetcode.com/problems/combination-sum-ii/#/description" target="_blank" rel="external">leetcode Combination Sum II</a></li>
@@ -265,14 +439,18 @@ Given a collection of integers that might contain duplicates, nums, return all p
     <summary type="html">
     
       
-&lt;div id=&quot;outline-container-org9125273&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org9125273&quot;&gt;Backtracking 算法&lt;/h2&gt;
+&lt;div id=&quot;outline-container-org6f63efa&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org6f63efa&quot;&gt;Backtracking 算法&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-org
     
     </summary>
     
       <category term="编程技巧" scheme="http://summerisgreen.com/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
     
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+      <category term="算法" scheme="http://summerisgreen.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -281,7 +459,7 @@ Given a collection of integers that might contain duplicates, nums, return all p
     <link href="http://summerisgreen.com/blog/2016-11-26-2016-11-26-%E5%B7%A7%E7%94%A8%E5%BC%82%E6%88%96%E6%89%BE%E5%87%BA%E5%94%AF%E4%B8%80%E5%87%BA%E7%8E%B0%E5%A5%87%E6%95%B0%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97.html"/>
     <id>http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html</id>
     <published>2016-11-25T16:00:00.000Z</published>
-    <updated>2017-07-07T02:50:23.812Z</updated>
+    <updated>2017-07-28T04:00:12.256Z</updated>
     
     <content type="html"><![CDATA[<p>
 异或操作看似是数字逻辑的一个很简单的运算方法，
@@ -439,6 +617,8 @@ Find the two elements that appear only once.
     
     
       <category term="编程技巧" scheme="http://summerisgreen.com/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+      <category term="算法" scheme="http://summerisgreen.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
