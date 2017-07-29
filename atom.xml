@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerisgreen.com/"/>
-  <updated>2017-07-28T04:06:02.316Z</updated>
+  <updated>2017-07-29T05:18:04.354Z</updated>
   <id>http://summerisgreen.com/</id>
   
   <author>
@@ -16,11 +16,216 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>算法技巧-使用动态规划求解部分和问题</title>
+    <link href="http://summerisgreen.com/blog/2017-07-28-2017-07-28-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7-%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E9%83%A8%E5%88%86%E5%92%8C%E9%97%AE%E9%A2%98.html"/>
+    <id>http://summerisgreen.com/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html</id>
+    <published>2017-07-27T16:00:00.000Z</published>
+    <updated>2017-07-29T05:18:04.354Z</updated>
+    
+    <content type="html"><![CDATA[
+<div id="outline-container-orgf8e249b" class="outline-2">
+<h2 id="orgf8e249b">部分和问题</h2>
+<div class="outline-text-2" id="text-orgf8e249b">
+<p>
+在算法中，有一类常见的问题被称为部分和问题。
+在这类问题中，你需要判断是否能够使用给定数组中的部分数，通过累加获得所要获得的目标和。
+而对于每个候选数字，在有些题目中你只能使用一次，而在另一些题目中则可以多次使用。
+在后面我们会看到，这两种情况都可以使用动态规划方法来求解，只不过具体的求解思路会有一些不同。
+</p>
+</div>
+</div>
+<div id="outline-container-org26027f0" class="outline-2">
+<h2 id="org26027f0">Partition Equal Subset Sum</h2>
+<div class="outline-text-2" id="text-org26027f0">
+<pre class="example">
+Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+</pre>
+
+<p>
+为了解决这个问题，首先假设我们将集合 nums 分成了满足条件的 A 和 B 这两个子集合，它们必然满足下面两个条件：
+</p>
+
+<p>
+sum(A) = sum(B)
+sum(A) + sum(B) = sum(nums)
+</p>
+
+<p>
+使用前一个公式将后一个等式中的B替换为A，可得：
+</p>
+
+<p>
+sum(A) = sum(nums)/2 
+</p>
+
+<p>
+我们可以发现，这道题已经转化成了我们之前所讨论的部分和的问题了。
+</p>
+
+<p>
+现在我们所要求解的是：是否能够从一个给定的数的集合选出一个子集合，这个子集合中元素的和为该集合中全部元素和的一半。
+当然如果整个集合中所有元素的和为奇数的话，这个子集合肯定不存在。可以对这个条件提前进行判断，以减少不必要的计算。
+</p>
+
+<p>
+如果整个集合中所有元素的和的一半为偶数的话，就需要使用动态规划方法来判断是否能够找到这样的子集合。
+为了使用动态规划方法，我们构造了一个数组称为 oldp，其表示对于已经遍历过的数字，是否能在它们中找到所有元素的和等于该索引值的子集合。
+</p>
+<ul class="org-ul">
+<li>初始化：在第一次迭代之前，只有索引为0的位置的值为True，其余均为False，条件为真。</li>
+<li>保持：当遍历第i个数时，当且仅当j之前就能被部分和所表示或者j-i能被表示时，该遍历完成后j能被表示。</li>
+<li>终止：oldp 中各个索引的值表示是否能用所给的数组的部分和来表示。</li>
+</ul>
+
+<p>
+因此在完成所有数值的循环后，只需要查看索引为 half 的 oldp 即可知道是否能将整个数组分为两个元素和相等的集合。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">canPartition</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :rtype: bool</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">sums</span> = <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> sums % <span style="color: #a45bad;">2</span> == <span style="color: #a45bad;">1</span>:
+        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+    <span style="color: #7590db;">half</span> = sums / <span style="color: #a45bad;">2</span>
+    <span style="color: #7590db;">oldp</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">False</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>half + <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">oldp</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">True</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>half, i-<span style="color: #a45bad;">1</span>, -<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">oldp</span><span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> = oldp<span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> <span style="color: #4f97d7; font-weight: bold;">or</span> oldp<span style="color: #4f97d7;">[</span>j-i<span style="color: #4f97d7;">]</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">return</span> oldp<span style="color: #4f97d7;">[</span>half<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org965cb50" class="outline-2">
+<h2 id="org965cb50">Target Sum</h2>
+<div class="outline-text-2" id="text-org965cb50">
+<pre class="example">
+ You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
+
+Find out how many ways to assign symbols to make sum of integers equal to target S. 
+</pre>
+
+<p>
+这道题目看起来和上一个题目相差很大，但是如果我们对题目所给的条件做一些适当的数学变化的话，
+就会发现这道题目本质上也是个部分和的问题。
+</p>
+
+<p>
+首先我们假设在这个集合中，正的子集合为P，负的为N。
+然后我们就可以使用这两个符号将题目所包含的关系给表示出来：
+</p>
+
+<p>
+sum(P) + sum(N) = sum(nums)
+</p>
+
+<p>
+sum(P) - sum(N) = S
+</p>
+
+<p>
+将这两个等式组合一下之后，我们可以发现该问题已经转换为部分和的问题了:
+</p>
+
+<p>
+sum(P) = (sum(nums) + S)/2
+</p>
+
+<p>
+这里一个比较大的不同就是：这个问题所求的是有多少种不同的部分和的结果和目标值相同，而上一题仅仅需要知道是否存在和目标值的部分和。
+所以在这里，我们的 dp 表示的是存在多少种不同的部分和可以表示该索引值，此时的内层递推公式也相应的改成了:
+</p>
+
+<p>
+dp[j] += dp[j-1]
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">findTargetSumWays</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums, S<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :type S: int</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">target</span> = <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> + S
+    <span style="color: #4f97d7; font-weight: bold;">if</span> S &gt; <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">or</span> target % <span style="color: #a45bad;">2</span>:
+        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">0</span>
+    <span style="color: #4f97d7; font-weight: bold;">else</span>:
+        <span style="color: #7590db;">target</span> = target/<span style="color: #a45bad;">2</span>
+
+    <span style="color: #7590db;">dp</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">dp</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">reversed</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">range</span><span style="color: #bc6ec5;">(</span>i, target+<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">dp</span><span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> += dp<span style="color: #4f97d7;">[</span>j-i<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> dp<span style="color: #4f97d7;">[</span>target<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga8e0569" class="outline-2">
+<h2 id="orga8e0569">Combination Sum IV</h2>
+<div class="outline-text-2" id="text-orga8e0569">
+<pre class="example">
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+</pre>
+
+<p>
+需要注意的是，在这个题目中数组中的每个数字都可以使用多次，而不是像之前的题目所要求的只能使用一次。
+为了能够满足这个条件，我们可以从1开始一直到目标值，依次尝试是否能够使用数组中的数来累加到所尝试的索引值。
+因为数组中的数是大于等于1的，而我们对部分和目标值的搜索跨度为1，所以使用这种方法必定是不会错过数组集合中所有数值的任何一种可能的组合的。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">combinationSum4</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums, target<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :type target: int</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">d</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">d</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>,target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+            <span style="color: #4f97d7; font-weight: bold;">if</span> i &gt;= j:
+                <span style="color: #7590db;">d</span><span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span> += d<span style="color: #4f97d7;">[</span>i-j<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> d<span style="color: #4f97d7;">[</span>target<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+]]></content>
+    
+    <summary type="html">
+    
+      
+&lt;div id=&quot;outline-container-orgf8e249b&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgf8e249b&quot;&gt;部分和问题&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgf8e249b&quot;&gt;
+
+    
+    </summary>
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="编程技巧" scheme="http://summerisgreen.com/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E5%B7%A7/"/>
+    
+      <category term="算法" scheme="http://summerisgreen.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>算法技巧-使用动态规划解决地图路径类问题</title>
     <link href="http://summerisgreen.com/blog/2017-07-27-2017-07-27-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7-%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%A7%A3%E5%86%B3%E5%9C%B0%E5%9B%BE%E8%B7%AF%E5%BE%84%E7%B1%BB%E9%97%AE%E9%A2%98.html"/>
     <id>http://summerisgreen.com/blog/2017-07-27-2017-07-27-算法技巧-使用动态规划解决地图路径类问题.html</id>
     <published>2017-07-26T16:00:00.000Z</published>
-    <updated>2017-07-28T04:06:02.316Z</updated>
+    <updated>2017-07-29T05:16:26.430Z</updated>
     
     <content type="html"><![CDATA[
 <div id="outline-container-org56e4fd7" class="outline-2">
@@ -50,22 +255,33 @@ Given a m x n grid filled with non-negative numbers, find a path from top left t
 </pre>
 
 <p>
-对于最短路径问题，假设我们有一个 \(m*n\) 的cost矩阵，这个矩阵中每个点表示的是从起始点到该点的最小路径的值。
-矩阵中值的迭代过程可以使用下面的公式来表示：\(cost(i,j) = min(cost(i-1,j), cost(i,j-1)) + grid[i][j]\) 。
+对于最短路径问题，假设我们有一个 m*n 的cost矩阵，这个矩阵中每个点表示的是从起始点到该点的最小路径的值。
+矩阵中值的迭代过程可以使用下面的公式来表示：
+</p>
+
+<p>
+cost(i,j) = min(cost(i-1,j), cost(i,j-1)) + grid[i][j]。
+</p>
+
+<p>
 有了这个迭代公式，我们就可以使用动态规划方法来求解这个最短路径的问题了。
 </p>
 
 <p>
 在编码之前，我们通过观察可以发现，在实际计算cost时，我们只需要当前行中的前一列中的元素和前一行中当前列的元素，
-因此我们实际需要的只是两个n维向量而不是 \(m*n\) 的矩阵。
+因此我们实际需要的只是两个n维向量而不是 m*n 的矩阵。
 我们将这两个向量命名为 pre 和 cur，它们分别表示前一行和当前行向量。
-利用这两个向量，我们将之前的迭代公式转化为：$cur(j) = min(cur(j-1),pre(j)) + grid[i][j]$。
+利用这两个向量，我们将之前的迭代公式转化为：
+</p>
+
+<p>
+cur(j) = min(cur(j-1),pre(j)) + grid[i][j]。
 </p>
 
 <p>
 在编码求解该问题的过程中，一个比较麻烦的细节就是对边界问题的处理了。
 可以使用的一个技巧就是给这两个向量的头部增加一个节点作为哨兵节点。
-这里将 cur 的第一个节点设置为 $&infin;$，保证最左端的节点只会采用从前一行过来的路径。
+这里将 cur 的第一个节点设置为正无穷大，保证最左端的节点只会采用从前一行过来的路径。
 而第一行需要特殊处理，因为他们都只存在从左边过来的路径，这里将 pre 的第一个元素设置为0，从而保证了元素值的正确性。
 </p>
 <div class="org-src-container">
@@ -101,7 +317,7 @@ How many possible unique paths are there?
 </pre>
 
 <p>
-这个问题的基本迭代公式为 $paths(i,j) = paths(i-1,j) + paths(i,j-1)$，其解决思路和上一题的一致，只是初始化和边界条件的设置更加简单。
+这个问题的基本迭代公式为 paths(i,j) = paths(i-1,j) + paths(i,j-1)，其解决思路和上一题的一致，只是初始化和边界条件的设置更加简单。
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">uniquePaths</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, m, n<span style="color: #4f97d7;">)</span>:
@@ -194,7 +410,7 @@ An obstacle and empty space is marked as 1 and 0 respectively in the grid.
     <link href="http://summerisgreen.com/blog/2017-07-07-2017-07-07-%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7-backtracking.html"/>
     <id>http://summerisgreen.com/blog/2017-07-07-2017-07-07-算法技巧-backtracking.html</id>
     <published>2017-07-06T16:00:00.000Z</published>
-    <updated>2017-07-28T04:05:12.523Z</updated>
+    <updated>2017-07-29T05:02:14.980Z</updated>
     
     <content type="html"><![CDATA[
 <div id="outline-container-org6f63efa" class="outline-2">
@@ -327,8 +543,8 @@ Each number in C may only be used once in the combination.
 <p>
 首先需要做的是对整个原始数据进行排序，
 因为这用可以方便后面过滤掉重复的结果，并且可以使得后续的运算时间减少一个常数因子（为之前的几分之一）。
-而这个方法对整个程序的时间效率的影响不大，对候选对象的排序的时间复杂度为 \(O(n * lg(n))\)
-和整个搜索过程的时间复杂度(\(O(n^2)\))不是一个量级上的。
+而这个方法对整个程序的时间效率的影响不大，对候选对象的排序的时间复杂度为 O(n * lg(n))
+和整个搜索过程的时间复杂度(O(n^2))不是一个量级上的。
 </p>
 
 <p>

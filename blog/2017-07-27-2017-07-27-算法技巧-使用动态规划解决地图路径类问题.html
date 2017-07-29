@@ -83,22 +83,33 @@ Given a m x n grid filled with non-negative numbers, find a path from top left t
 </pre>
 
 <p>
-对于最短路径问题，假设我们有一个 \(m*n\) 的cost矩阵，这个矩阵中每个点表示的是从起始点到该点的最小路径的值。
-矩阵中值的迭代过程可以使用下面的公式来表示：\(cost(i,j) = min(cost(i-1,j), cost(i,j-1)) + grid[i][j]\) 。
+对于最短路径问题，假设我们有一个 m*n 的cost矩阵，这个矩阵中每个点表示的是从起始点到该点的最小路径的值。
+矩阵中值的迭代过程可以使用下面的公式来表示：
+</p>
+
+<p>
+cost(i,j) = min(cost(i-1,j), cost(i,j-1)) + grid[i][j]。
+</p>
+
+<p>
 有了这个迭代公式，我们就可以使用动态规划方法来求解这个最短路径的问题了。
 </p>
 
 <p>
 在编码之前，我们通过观察可以发现，在实际计算cost时，我们只需要当前行中的前一列中的元素和前一行中当前列的元素，
-因此我们实际需要的只是两个n维向量而不是 \(m*n\) 的矩阵。
+因此我们实际需要的只是两个n维向量而不是 m*n 的矩阵。
 我们将这两个向量命名为 pre 和 cur，它们分别表示前一行和当前行向量。
-利用这两个向量，我们将之前的迭代公式转化为：$cur(j) = min(cur(j-1),pre(j)) + grid[i][j]$。
+利用这两个向量，我们将之前的迭代公式转化为：
+</p>
+
+<p>
+cur(j) = min(cur(j-1),pre(j)) + grid[i][j]。
 </p>
 
 <p>
 在编码求解该问题的过程中，一个比较麻烦的细节就是对边界问题的处理了。
 可以使用的一个技巧就是给这两个向量的头部增加一个节点作为哨兵节点。
-这里将 cur 的第一个节点设置为 $&infin;$，保证最左端的节点只会采用从前一行过来的路径。
+这里将 cur 的第一个节点设置为正无穷大，保证最左端的节点只会采用从前一行过来的路径。
 而第一行需要特殊处理，因为他们都只存在从左边过来的路径，这里将 pre 的第一个元素设置为0，从而保证了元素值的正确性。
 </p>
 <div class="org-src-container">
@@ -134,7 +145,7 @@ How many possible unique paths are there?
 </pre>
 
 <p>
-这个问题的基本迭代公式为 $paths(i,j) = paths(i-1,j) + paths(i,j-1)$，其解决思路和上一题的一致，只是初始化和边界条件的设置更加简单。
+这个问题的基本迭代公式为 paths(i,j) = paths(i-1,j) + paths(i,j-1)，其解决思路和上一题的一致，只是初始化和边界条件的设置更加简单。
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">uniquePaths</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, m, n<span style="color: #4f97d7;">)</span>:
@@ -215,6 +226,10 @@ An obstacle and empty space is marked as 1 and 0 respectively in the grid.
 </article>
 
 <nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html">
+        ← prev <!--算法技巧-使用动态规划求解部分和问题-->
+    </a>
     
     <span class="page-number">•</span>
     
