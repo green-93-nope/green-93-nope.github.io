@@ -70,9 +70,9 @@ Hadoop作为大数据领域的明星项目，提供了MapReduce分布式编程�
 而最为直接有效的一种调优方式就是调整Mapper和Reducer的数量。
 </p>
 
-<div id="outline-container-org4c37736" class="outline-2">
-<h2 id="org4c37736">Mapper的数量设定</h2>
-<div class="outline-text-2" id="text-org4c37736">
+<div id="outline-container-org822556c" class="outline-2">
+<h2 id="org822556c">Mapper的数量设定</h2>
+<div class="outline-text-2" id="text-org822556c">
 <p>
 在对Mapper调优的过程中，一个经验法则是：
 map任务最好拥有一分钟以上的运行时间。
@@ -109,9 +109,9 @@ FileInputFormat提供了三个属性参数来控制实际的分片大小：mapre
 </div>
 </div>
 
-<div id="outline-container-org9e4d141" class="outline-2">
-<h2 id="org9e4d141">Reducer的数量设定</h2>
-<div class="outline-text-2" id="text-org9e4d141">
+<div id="outline-container-org1dd2598" class="outline-2">
+<h2 id="org1dd2598">Reducer的数量设定</h2>
+<div class="outline-text-2" id="text-org1dd2598">
 <p>
 Reducer的个数是由用户独立设置的，在默认情况下只有一个Reducer。
 它的个数既可以使用命令行参数设置（mapreduce.job.reduces=number），也可以在程序中制定（job.setNumReduceTasks(number)）。
@@ -129,9 +129,9 @@ Hadoop权威指南给出的一条经验法则是：目标Reducer保持在每个�
 </div>
 </div>
 
-<div id="outline-container-orgffc62e6" class="outline-2">
-<h2 id="orgffc62e6">参考</h2>
-<div class="outline-text-2" id="text-orgffc62e6">
+<div id="outline-container-orgb4af80d" class="outline-2">
+<h2 id="orgb4af80d">参考</h2>
+<div class="outline-text-2" id="text-orgb4af80d">
 <p>
 <a href="https://book.douban.com/subject/27115351/" target="_blank" rel="noopener">Hadoop权威指南</a>
 </p>
@@ -163,6 +163,10 @@ Hadoop权威指南给出的一条经验法则是：目标Reducer保持在每个�
 
 <nav class="pagination" role="pagination">
     
+    <a class="newer-posts" href="/blog/2019-03-03-2019-03-03-futuretask中的状态机.html">
+        ← prev <!--FutureTask源码简析-->
+    </a>
+    
     <span class="page-number">•</span>
     
     <a class="older-posts" href="/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html">
@@ -174,7 +178,7 @@ Hadoop权威指南给出的一条经验法则是：目标Reducer保持在每个�
 
         </main>
         <footer id="footer">
-            <section id="footer-message">&copy; 2018 Green. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+            <section id="footer-message">&copy; 2019 Green. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
         </footer>
     </body>
 </html>
