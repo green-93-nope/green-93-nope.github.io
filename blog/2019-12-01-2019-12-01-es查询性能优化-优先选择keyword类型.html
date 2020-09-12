@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"summerisgreen.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="线上一个es查询越來越慢，而且cpu使用率也越來越高，逼近了比较危险的60%。 在公司的es专家帮忙profile了慢查询后，发现大量时间开销花在一个只有0和1两种取值的int型字段term查询上(build_scorer耗时非常高)，让我们把不需要数学计算及范围查询的数值类型都改为keyword。    完成字段类型修改后，我们还针对过滤后集合较小的场景使用了map的聚合数据结构，果然性能从之">
+<meta name="keywords" content="elasticsearch,性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES查询性能优化-优先选择keyword类型">
+<meta property="og:url" content="http://summerisgreen.com/blog/2019-12-01-2019-12-01-es查询性能优化-优先选择keyword类型.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="线上一个es查询越來越慢，而且cpu使用率也越來越高，逼近了比较危险的60%。 在公司的es专家帮忙profile了慢查询后，发现大量时间开销花在一个只有0和1两种取值的int型字段term查询上(build_scorer耗时非常高)，让我们把不需要数学计算及范围查询的数值类型都改为keyword。    完成字段类型修改后，我们还针对过滤后集合较小的场景使用了map的聚合数据结构，果然性能从之">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-05T16:51:25.028Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES查询性能优化-优先选择keyword类型">
+<meta name="twitter:description" content="线上一个es查询越來越慢，而且cpu使用率也越來越高，逼近了比较危险的60%。 在公司的es专家帮忙profile了慢查询后，发现大量时间开销花在一个只有0和1两种取值的int型字段term查询上(build_scorer耗时非常高)，让我们把不需要数学计算及范围查询的数值类型都改为keyword。    完成字段类型修改后，我们还针对过滤后集合较小的场景使用了map的聚合数据结构，果然性能从之">
+
+<link rel="canonical" href="http://summerisgreen.com/blog/2019-12-01-2019-12-01-es查询性能优化-优先选择keyword类型.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>ES查询性能优化-优先选择keyword类型 | Summer is Green</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Summer is Green</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a blog for writing and thinking</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://summerisgreen.com/blog/2019-12-01-2019-12-01-es查询性能优化-优先选择keyword类型.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/author.png">
+      <meta itemprop="name" content="Green">
+      <meta itemprop="description" content="Abracadabra">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Summer is Green">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ES查询性能优化-优先选择keyword类型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-01T00:00:00+08:00">2019-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-06 00:51:25" itemprop="dateModified" datetime="2019-12-06T00:51:25+08:00">2019-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>
+线上一个es查询越來越慢，而且cpu使用率也越來越高，逼近了比较危险的60%。
+在公司的es专家帮忙profile了慢查询后，发现大量时间开销花在一个只有0和1两种取值的int型字段term查询上(build_scorer耗时非常高)，让我们把不需要数学计算及范围查询的数值类型都改为keyword。
+</p>
+
+<p>
+完成字段类型修改后，我们还针对过滤后集合较小的场景使用了map的聚合数据结构，果然性能从之前的300ms提升到20ms,并且cpu使用率也降到了5%以下，可以说效果非常显著。
+这也带来了一个疑惑，es的索引字段类型keyword和number为何性能会相差如此之多。
+</p>
+<div id="outline-container-org8474fd1" class="outline-2">
+<h2 id="org8474fd1">优先使用keyword而不是number</h2>
+<div class="outline-text-2" id="text-org8474fd1">
+<p>
+由于从es 5.x开始，其使用了block k-d tree作为数值型字段的数据结构, 而不再是倒排索引,
+number和keyword查询适用范围也发生了很多差别，关于两者的具体，<a href="https://elasticsearch.cn/article/446" target="_blank" rel="noopener">wood大叔的一篇文章</a>讲的非常透彻。 
+</p>
+
+<p>
+对于不关心细节的使用者来说，只要把握如下两个原则即可:
+</p>
+<ul class="org-ul">
+<li>对于不需要范围查询和数值比较的字段，尽可能用keyword</li>
+<li>如果profile发现，大量时间开销将花费在build_scorer上，可以考虑下是否有number型字段需要替换成keyword</li>
+</ul>
+
+<p>
+keyword和number底层数据结构的区别以及适用的查询方式如下表所示:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="org-left">
+</colgroup>
+
+<colgroup>
+<col class="org-left">
+</colgroup>
+
+<colgroup>
+<col class="org-left">
+</colgroup>
+
+<colgroup>
+<col class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">字段类型</th>
+<th scope="col" class="org-left">数据结构</th>
+<th scope="col" class="org-left">已有起始集合的term查询</th>
+<th scope="col" class="org-left">range查询</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">keyword</td>
+<td class="org-left">倒排索引</td>
+<td class="org-left">利用跳表快速定位docid</td>
+<td class="org-left">区间内所有枚举值的term查询结果的合并(OR)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">number</td>
+<td class="org-left">Block k-d tree</td>
+<td class="org-left">PointRangeQuery:满足条件的docid构建bitset</td>
+<td class="org-left">获取叶节点上的所有docid，扫描并和range范围比较</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+通过观察上述表格，解释了为何一个只有0和1两种取值的int型字段term查询非常慢:该term查询筛选出的集合非常之大，以至于光是构造bitset都非常耗时。
+而将该类型转化为keyword后，在代价低的查询构造完迭代器后，其可以利用跳表快速判断迭代器中的docid是否满足要求。
+</p>
+
+<p>
+由于存在当rangeQuery的结果集巨大，而你却要为了验证少数几个docid是否存在，而不得不遍历整个结果集的问题，es 5.4引入了<a href="https://www.elastic.co/cn/blog/better-query-planning-for-range-queries-in-elasticsearch" target="_blank" rel="noopener">indexOrDocValuesQuery</a>。
+其对于遍历整个结果集的顺序访问场景，使用原有的PointRangeQuery。而对于仅仅验证少部分结果是否存在的随即访问场景,其将采用新引入的SortedSetDocValuesRangeQuery:
+从代价更低的query构造出的迭代器中，依次取出doc id并去磁盘(随机访问)匹配value。
+</p>
+</div>
+</div>
+<div id="outline-container-orga69abc6" class="outline-2">
+<h2 id="orga69abc6">为何聚合依旧很慢</h2>
+<div class="outline-text-2" id="text-orga69abc6">
+<p>
+当将能改成keyword的索引字段都改成keyword后，发现个很神奇的现象，
+一个query第一次查询时甚至比优化前慢多了达到秒级别，但多尝试几次后又很快，达到20多ms。
+经过对查询条件进行多次调整尝试，发现上述问题是对区分度较高的keyword字段(原先为数值型)进行聚合而导致的。
+</p>
+
+<p>
+<a href="https://www.elastic.co/cn/blog/improving-the-performance-of-high-cardinality-terms-aggregations-in-elasticsearch" target="_blank" rel="noopener">查询资料</a>后了解到，ES默认聚合采用global ordinals的数据结构对聚合字段进行bucket分组，其适合包含的原始文档非常多的情况。
+但当新数据刷入后的查询需要重建global ordinals数据结构，此时将会产生慢查询，并且重建时间随着区分度的增加而增加。
+可通过<a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.5/eager-global-ordinals.html" target="_blank" rel="noopener">enable eager global ordinals</a>,让其在segments更新时自动更新全局global ordinals，从而保证查询稳定性。
+</p>
+
+<p>
+在我们的场景中，由于terms过滤后只剩少量文档需要聚合，可以采用直接在内存map中进行聚合的方案。
+可以设置execution_hint:map达到此效果。不过在6.7版本前，由于存在bug，需要将查询语句改写成script才能走map的聚合计划。具体可参考如下示例。
+</p>
+<pre class="example">
+"aggregations" : {
+    "top-ibans" : {
+         "terms" : {
+             "script": {
+                 "source" : "doc['IBAN_keyword'].value",
+                 "lang" : "painless"
+             }
+         }
+     }
+}
+</pre>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+              <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2019-03-03-2019-03-03-futuretask中的状态机.html" rel="prev" title="FutureTask源码简析">
+      <i class="fa fa-chevron-left"></i> FutureTask源码简析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020-02-02-2020-02-02-schedulethreadpool中的leader-follow模式.html" rel="next" title="ScheduledThreadPool中的Leader-Follow模式">
+      ScheduledThreadPool中的Leader-Follow模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#org8474fd1"><span class="nav-number">1.</span> <span class="nav-text">优先使用keyword而不是number</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orga69abc6"><span class="nav-number">2.</span> <span class="nav-text">为何聚合依旧很慢</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Green"
+      src="/img/author.png">
+  <p class="site-author-name" itemprop="name">Green</p>
+  <div class="site-description" itemprop="description">Abracadabra</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

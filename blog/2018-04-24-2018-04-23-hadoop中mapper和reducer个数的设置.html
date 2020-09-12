@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"summerisgreen.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="对于大数据处理，特别是T级别以上的海量数据， 由于数据量大大超过了单机运算能力，需要通过分布式的方法来对数据进行处理。 Hadoop作为大数据领域的明星项目，提供了MapReduce分布式编程框架, 其基于分而治冶的思想，将海量数据拆分为大量的小数据块，从而在多个节点并行处理海量数据。    虽然MapReduce通过分布式计算、map端&quot;数据本地化优化“等不同层次的策略来提升数据处理任务的执行">
+<meta name="keywords" content="大数据,Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop中的Mapper和Reducer数量设定">
+<meta property="og:url" content="http://summerisgreen.com/blog/2018-04-24-2018-04-23-hadoop中mapper和reducer个数的设置.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="对于大数据处理，特别是T级别以上的海量数据， 由于数据量大大超过了单机运算能力，需要通过分布式的方法来对数据进行处理。 Hadoop作为大数据领域的明星项目，提供了MapReduce分布式编程框架, 其基于分而治冶的思想，将海量数据拆分为大量的小数据块，从而在多个节点并行处理海量数据。    虽然MapReduce通过分布式计算、map端&quot;数据本地化优化“等不同层次的策略来提升数据处理任务的执行">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-14T23:44:27.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop中的Mapper和Reducer数量设定">
+<meta name="twitter:description" content="对于大数据处理，特别是T级别以上的海量数据， 由于数据量大大超过了单机运算能力，需要通过分布式的方法来对数据进行处理。 Hadoop作为大数据领域的明星项目，提供了MapReduce分布式编程框架, 其基于分而治冶的思想，将海量数据拆分为大量的小数据块，从而在多个节点并行处理海量数据。    虽然MapReduce通过分布式计算、map端&quot;数据本地化优化“等不同层次的策略来提升数据处理任务的执行">
+
+<link rel="canonical" href="http://summerisgreen.com/blog/2018-04-24-2018-04-23-hadoop中mapper和reducer个数的设置.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Hadoop中的Mapper和Reducer数量设定 | Summer is Green</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Summer is Green</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a blog for writing and thinking</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://summerisgreen.com/blog/2018-04-24-2018-04-23-hadoop中mapper和reducer个数的设置.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/author.png">
+      <meta itemprop="name" content="Green">
+      <meta itemprop="description" content="Abracadabra">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Summer is Green">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hadoop中的Mapper和Reducer数量设定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-24T00:00:00+08:00">2018-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-15 07:44:27" itemprop="dateModified" datetime="2019-03-15T07:44:27+08:00">2019-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>
+对于大数据处理，特别是T级别以上的海量数据，
+由于数据量大大超过了单机运算能力，需要通过分布式的方法来对数据进行处理。
+Hadoop作为大数据领域的明星项目，提供了MapReduce分布式编程框架,
+其基于分而治冶的思想，将海量数据拆分为大量的小数据块，从而在多个节点并行处理海量数据。
+</p>
+
+<p>
+虽然MapReduce通过分布式计算、map端"数据本地化优化“等不同层次的策略来提升数据处理任务的执行效率，
+但由于实际处理的数据量较大，一个典型的MapReduce作业往往需要花费数分钟到数小时来完成。
+并且在任务执行的过程中，MapReduce作业还将占用大量的网络带宽和计算资源，从而降低了整个集群的计算能力。
+为了进一步提升MapReduce的执行效率，需要对MapReduce任务进行调优。
+而最为直接有效的一种调优方式就是调整Mapper和Reducer的数量。
+</p>
+
+<div id="outline-container-org822556c" class="outline-2">
+<h2 id="org822556c">Mapper的数量设定</h2>
+<div class="outline-text-2" id="text-org822556c">
+<p>
+在对Mapper调优的过程中，一个经验法则是：
+map任务最好拥有一分钟以上的运行时间。
+因为如果任务运行时间过短，将导致在整个作业的执行过程中任务启动所花费的时间过大，从而降低了实际的任务执行效率。
+对map任务的运行时间影响最大的是Mapper的个数，不过与Reducer不同，Mapper的个数是无法显示指定的。
+调节Mapper数量的一种方式是设置参数mapred.jobtracker.maxtasks.per.job，
+但其只能限制每个job中并发运行的map或reduce任务的上限，而当实际运行的map数低于该上限时，该参数将失效。
+如果想要对Mapper个数进行更加直接有效的控制，需要指定输入数据的分片大小。
+</p>
+
+<p>
+输入分片(input split)是MapReduce框架为使map任务能并行处理海量数据记录，
+为每个map任务单独划分的一个等长小数据块。
+在MapReduce框架中，输入数据分片通过InputFormat接口完成。
+为方便程序员使用，Hadoop为最常见的文件数据源提供了大量基于FileInputFormat基类的实现类。
+因此只要掌握了FileInputFormat的数据分片原理，也就知道了各种常见的数据源实现类是如何进行数据分片的了。
+</p>
+
+<p>
+FileInputFormat提供了三个属性参数来控制实际的分片大小：mapreduce.input.fileinputformat.split.minsize, mapreduce.input.fileinputformat.split.maxsize以及dfs.blocksize。
+这三个参数分别表示一个文件分片最小的有效字节数、最大字节数以及HDFS中块的大小。
+利用公式splitSize = max(minimumSize, min(maximumSize, blockSize))，可以通过改变上述三个参数来调节最终的分片大小。
+在调节分片大小时需要防止分片切分过小，避免管理分片和构建map任务的时间在整个任务运行周期中占比过大。
+但分片划分也不是越大越好，至少不应大于块大小，因为那时将无法确保存储有该切片的多个数据块位于单个节点中，从而增加了执行map任务时的网络传输。
+因此对于大多数作业来说，一个合理的分片大小趋向于HDFS的一个块的大小，默认是128MB。
+</p>
+
+<p>
+需要注意的是，虽然输入分片划分是本着尽量拆分成等长数据块的原则，但最后的分片大小并不完全一致。
+因为数据分片对有效字节数小于maximumSize的文件并不进行拆分，而且进行拆分的大文件的大小往往不会为文件块大小的整数倍。
+分片大小与指向分片数据的引用一起包含在输入分片中，供application master调度使用。
+在调度的过程中，Hadoop通过优先处理最大的分片以最小化实际运行时间。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1dd2598" class="outline-2">
+<h2 id="org1dd2598">Reducer的数量设定</h2>
+<div class="outline-text-2" id="text-org1dd2598">
+<p>
+Reducer的个数是由用户独立设置的，在默认情况下只有一个Reducer。
+它的个数既可以使用命令行参数设置（mapreduce.job.reduces=number），也可以在程序中制定（job.setNumReduceTasks(number)）。
+</p>
+
+<p>
+为了更加高效地完成reduce任务，Reducer的个数需要依据自己的任务特点和机器负载情况进行选择。
+Hadoop权威指南给出的一条经验法则是：目标Reducer保持在每个运行5分钟左右，且产生至少一个HDFS块的输出。
+而Apache的MapReduce官方教程中给出的建议是：Reducer个数应该设置为0.95或者1.75乘以节点数与每个节点的容器数的乘积。
+当乘数为0.95时，map任务结束后所有的reduce将会立刻启动并开始转移数据，
+此时队列中无等待任务，该设置适合reudce任务执行时间短或者reduce任务在个节点的执行时间相差不大的情况；
+当乘数为1.75时，运行较快的节点将在完成第一轮reduce任务后，可以立即从队列中取出新的reduce任务执行，
+由于该reduce个数设置方法减轻了单个reduce任务的负载，并且运行较快的节点将执行新的reduce任务而非空等执行较慢的节点，其拥有更好的负载均衡特性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb4af80d" class="outline-2">
+<h2 id="orgb4af80d">参考</h2>
+<div class="outline-text-2" id="text-orgb4af80d">
+<p>
+<a href="https://book.douban.com/subject/27115351/" target="_blank" rel="noopener">Hadoop权威指南</a>
+</p>
+
+<p>
+<a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Reducer" target="_blank" rel="noopener">MapReduce Tutorial</a>
+</p>
+
+<p>
+<a href="https://stackoverflow.com/questions/21980110/what-is-ideal-number-of-reducers-on-hadoop" target="_blank" rel="noopener">What is Ideal number of reducers on Hadoop?</a>
+</p>
+
+<p>
+<a href="https://stackoverflow.com/questions/20818370/how-to-set-the-number-of-mappers-in-new-hadoop-api" target="_blank" rel="noopener">How to set the number of mappers in new Hadoop api?</a>
+</p>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/大数据/" rel="tag"># 大数据</a>
+              <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html" rel="prev" title="算法技巧-使用动态规划求解部分和问题">
+      <i class="fa fa-chevron-left"></i> 算法技巧-使用动态规划求解部分和问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2019-03-03-2019-03-03-futuretask中的状态机.html" rel="next" title="FutureTask源码简析">
+      FutureTask源码简析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#org822556c"><span class="nav-number">1.</span> <span class="nav-text">Mapper的数量设定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#org1dd2598"><span class="nav-number">2.</span> <span class="nav-text">Reducer的数量设定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgb4af80d"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Green"
+      src="/img/author.png">
+  <p class="site-author-name" itemprop="name">Green</p>
+  <div class="site-description" itemprop="description">Abracadabra</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"summerisgreen.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="异或操作看似是数字逻辑的一个很简单的运算方法， 但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。">
+<meta name="keywords" content="编程技巧,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="巧用异或找出唯一出现奇数次的数字">
+<meta property="og:url" content="http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="异或操作看似是数字逻辑的一个很简单的运算方法， 但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-14T23:44:29.660Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="巧用异或找出唯一出现奇数次的数字">
+<meta name="twitter:description" content="异或操作看似是数字逻辑的一个很简单的运算方法， 但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。">
+
+<link rel="canonical" href="http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>巧用异或找出唯一出现奇数次的数字 | Summer is Green</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Summer is Green</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a blog for writing and thinking</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://summerisgreen.com/blog/2016-11-26-2016-11-26-巧用异或找出唯一出现奇数次的数字.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/author.png">
+      <meta itemprop="name" content="Green">
+      <meta itemprop="description" content="Abracadabra">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Summer is Green">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          巧用异或找出唯一出现奇数次的数字
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2016-11-26T00:00:00+08:00">2016-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-15 07:44:29" itemprop="dateModified" datetime="2019-03-15T07:44:29+08:00">2019-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程技巧/" itemprop="url" rel="index"><span itemprop="name">编程技巧</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>
+异或操作看似是数字逻辑的一个很简单的运算方法，
+但却具有一些很有用的特性，用好的话，对一些问题的解决可以起到四两拨千斤的效果。
+<a id="more"></a>
+</p>
+
+<div id="outline-container-org9c882f1" class="outline-2">
+<h2 id="org9c882f1">异或方法的基本原理</h2>
+<div class="outline-text-2" id="text-org9c882f1">
+<p>
+在维基百科中异或是这样定义的：在数字逻辑中，逻辑算符互斥（exclusive or）是对两个运算元的一种逻辑分析类型。
+而基于二进制的计算机中的信息操作就可以看作是一堆进行数字逻辑操作的信息。
+这也是异或操作在计算机中的运算速度非常快的一个原因。
+</p>
+
+<p>
+在数字逻辑中的运算方法有很多，而异或方法却能产生一些看似很奇妙的应用，
+这主要是因为它具有的数学上的一些特性：
+</p>
+<ul class="org-ul">
+<li>交换率：A^B=B^A</li>
+<li>结合率：A^B^C=A^(B^C)</li>
+<li>归零率：A^A=0</li>
+<li>自反：A^B^B=A</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orga6f27fa" class="outline-2">
+<h2 id="orga6f27fa">异或方法的一些简单的应用</h2>
+<div class="outline-text-2" id="text-orga6f27fa">
+<p>
+知道了异或的数学性质之后，就可以发现下面两道题目使用异或操作非常简单了。
+</p>
+</div>
+
+<div id="outline-container-orga3e91a6" class="outline-3">
+<h3 id="orga3e91a6">快速比较两个数的值是否相等</h3>
+<div class="outline-text-3" id="text-orga3e91a6">
+<p>
+在对时间和空间效率要求非常高的计算机底层编程中，
+经常会看到有汇编程序利用异或的归零率的特性，快速比较两个数的值是否相等。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">a^b == <span style="color: #a45bad;">0</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0e3227e" class="outline-3">
+<h3 id="org0e3227e">不使用其他空间交换两个数的值</h3>
+<div class="outline-text-3" id="text-org0e3227e">
+<p>
+应用异或操作的自反的性质，就可以在不使用额外空间的前提下交换两个数的值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #7590db;">a</span> = a^b
+<span style="color: #7590db;">b</span> = a^b
+<span style="color: #7590db;">a</span> = a^b
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org469a355" class="outline-2">
+<h2 id="org469a355">一些奇妙的应用</h2>
+<div class="outline-text-2" id="text-org469a355">
+<p>
+除了在上面这些简单的问题上，可以使用异或操作的小技巧，并且使程序的时间和空间效率得到改善以外。
+异或方法还可以在一些较为复杂的问题上得到应用，
+比如下面将会介绍的用来在一组数中找出唯一一个只出现了奇数次的数字这一系列问题。
+</p>
+</div>
+
+<div id="outline-container-orgf4c7053" class="outline-3">
+<h3 id="orgf4c7053">校招之找出未打卡员工题</h3>
+<div class="outline-text-3" id="text-orgf4c7053">
+<p>
+某互联网公司的一道很简单的校招笔试题目，使用异或可以很优雅地解决。
+</p>
+
+<pre class="example">
+题目：输入两行数据，第一行为全部员工的 id，第二行为某一天打卡的员工 id，
+已知只有一个员工没有打卡，求出未打卡员工的 id。（员工 id 不重复，每行输入的 id 未排序）
+
+输入：
+1001 1003 1002 1005 1004
+1002 1003 1001 1004
+
+输出：
+1005
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org19320ec" class="outline-3">
+<h3 id="org19320ec">leetcode之Single Number III</h3>
+<div class="outline-text-3" id="text-org19320ec">
+<p>
+之前在leetcode上也看到过一个使用异或方法来解决将会变得非常简单的一道题目，其最终的时间和空间复杂度分别为O(n)和O(1)。
+</p>
+
+<pre class="example">
+Given an array of numbers nums,
+in which exactly two elements appear only once and
+all the other elements appear exactly twice.
+
+Find the two elements that appear only once.
+</pre>
+
+<p>
+<!-- more -->
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd20fd20" class="outline-2">
+<h2 id="orgd20fd20">参考</h2>
+<div class="outline-text-2" id="text-orgd20fd20">
+<p>
+<a href="https://en.wikipedia.org/wiki/Exclusive_or" target="_blank" rel="noopener">Exclusive or</a>
+</p>
+
+<p>
+<a href="https://www.lijinma.com/blog/2014/05/29/amazing-xor/" target="_blank" rel="noopener">感受异或的神奇</a>
+</p>
+
+<p>
+<a href="http://www.alijava.com/campus-interview/" target="_blank" rel="noopener">2017互联网校招的一些面试题</a>
+</p>
+
+<p>
+<a href="https://leetcode.com/problems/single-number-iii/" target="_blank" rel="noopener">Single Number III</a>
+</p>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/编程技巧/" rel="tag"># 编程技巧</a>
+              <a href="/tags/算法/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2016-09-30-2016-09-30-使用hexo和emacs-org来写博客.html" rel="prev" title="使用Hexo和emacs-Org来写博客">
+      <i class="fa fa-chevron-left"></i> 使用Hexo和emacs-Org来写博客
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2017-07-07-2017-07-07-算法技巧-backtracking.html" rel="next" title="算法技巧-backtracking">
+      算法技巧-backtracking <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#org9c882f1"><span class="nav-number">1.</span> <span class="nav-text">异或方法的基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orga6f27fa"><span class="nav-number">2.</span> <span class="nav-text">异或方法的一些简单的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orga3e91a6"><span class="nav-number">2.1.</span> <span class="nav-text">快速比较两个数的值是否相等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#org0e3227e"><span class="nav-number">2.2.</span> <span class="nav-text">不使用其他空间交换两个数的值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#org469a355"><span class="nav-number">3.</span> <span class="nav-text">一些奇妙的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orgf4c7053"><span class="nav-number">3.1.</span> <span class="nav-text">校招之找出未打卡员工题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#org19320ec"><span class="nav-number">3.2.</span> <span class="nav-text">leetcode之Single Number III</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgd20fd20"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Green"
+      src="/img/author.png">
+  <p class="site-author-name" itemprop="name">Green</p>
+  <div class="site-description" itemprop="description">Abracadabra</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

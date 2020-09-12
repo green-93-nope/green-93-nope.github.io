@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"summerisgreen.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="为什么选择archlinux?   在使用 archlinux 之前，我还使用过 opensuse 和 ubuntu 这两款普及率比较高的 linux 发行版。    来自德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但却有着一些让你不得不放弃的缺点:   由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都">
+<meta name="keywords" content="archlinux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转投Archlinux">
+<meta property="og:url" content="http://summerisgreen.com/blog/2016-09-06-2016-09-06-转投archlinux.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="为什么选择archlinux?   在使用 archlinux 之前，我还使用过 opensuse 和 ubuntu 这两款普及率比较高的 linux 发行版。    来自德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但却有着一些让你不得不放弃的缺点:   由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-14T23:44:29.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="转投Archlinux">
+<meta name="twitter:description" content="为什么选择archlinux?   在使用 archlinux 之前，我还使用过 opensuse 和 ubuntu 这两款普及率比较高的 linux 发行版。    来自德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但却有着一些让你不得不放弃的缺点:   由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都">
+
+<link rel="canonical" href="http://summerisgreen.com/blog/2016-09-06-2016-09-06-转投archlinux.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>转投Archlinux | Summer is Green</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Summer is Green</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a blog for writing and thinking</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://summerisgreen.com/blog/2016-09-06-2016-09-06-转投archlinux.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/author.png">
+      <meta itemprop="name" content="Green">
+      <meta itemprop="description" content="Abracadabra">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Summer is Green">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          转投Archlinux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-06 00:00:00" itemprop="dateCreated datePublished" datetime="2016-09-06T00:00:00+08:00">2016-09-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-15 07:44:29" itemprop="dateModified" datetime="2019-03-15T07:44:29+08:00">2019-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/archlinux/" itemprop="url" rel="index"><span itemprop="name">archlinux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        
+<div id="outline-container-org8dc22b0" class="outline-2">
+<h2 id="org8dc22b0">为什么选择archlinux?</h2>
+<div class="outline-text-2" id="text-org8dc22b0">
+<p>
+在使用 archlinux 之前，我还使用过 opensuse 和 ubuntu 这两款普及率比较高的 linux 发行版。
+</p>
+
+<p>
+来自德国的linux发行版opensuse，采用了KDE的桌面环境，桌面简洁华丽, 还配有强大的包管理界面工具zypper。但却有着一些让你不得不放弃的缺点:
+</p>
+<ul class="org-ul">
+<li>由于墙的封锁， 而opensuse国内的镜像源也不多，每次更新都会被它的慢性子给急死。</li>
+<li>opensuse的包管理非常严格, 导致了很多软件包官方都不予支持。但就算这样，python-matplotlib这个科学计算必备的包竟然还出现了打包错误。。。</li>
+<li>opensuse采用的kde桌面虽然是非常华丽， 但是bug率也是让人无法忍受, 时常会出现桌面崩溃的情况， 这对于作为日常工作使用的系统来说可以说是致命的缺陷。也正因此我继而选择改用ubuntu。</li>
+</ul>
+
+<p>
+ubuntu作为linux世界最为人熟知的发行版了， 它拥有开箱即用，丰富的软件支持等相当给力的优点。
+这些优点从win平台转来的新手十分容易上手，而且在日常的使用中也是让人非常省心的。
+作为一个面向新手的发行版，在易用性上可以说是极其完美的。这也造成了后来我觉得archlinux安装过于麻烦而迟迟不愿尝试。
+不过这个开箱即用的设计理念也却对想要尝试自己DRY的geek来说带来很多的问题:
+</p>
+<ul class="org-ul">
+<li>作为一个想要提高生产力的程序员，如果你想要使用一些平铺式的窗口管理器，你会发现自己要解决大量的和ubuntu unity之间的冲突。</li>
+<li>如果你又碰巧是emacs用户, 你会发现快捷绑定中又存在这大量的冲突，而其中又有一些通过搜索引擎也找不到有用的解决方案。</li>
+</ul>
+
+<p>
+在成长为一个实用主义的程序员的过程中，我发现自己需要的是一个简单易用，而且又能很好地支持全键盘操作这种高生产力操作方式的操作系统。经过在google和知乎的一番调研，我最终选择了 archlinux。它除了满足我的需求之外，还有着以下几个优点：
+</p>
+</div>
+
+<div id="outline-container-org3e82e27" class="outline-3">
+<h3 id="org3e82e27">简洁</h3>
+<div class="outline-text-3" id="text-org3e82e27">
+<p>
+arch的哲学是Keep It Simple, Stupid。所以在初始安装时它只会安装一个无图像界面的基本系统。这也给arch用户极大的自由度以根据自己的考量或喜爱来DRY出自己的系统。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbfc2af1" class="outline-3">
+<h3 id="orgbfc2af1">包管理</h3>
+<div class="outline-text-3" id="text-orgbfc2af1">
+<p>
+arch有着极其强大的包管理工具pacman，它的输出简单易懂而且十分规范，非常方便后期的解析。如果你仔细看过pacman的官方wiki，你就会发现如此惊艳的获取来自官方源的软件包并重新安装的命令：
+</p>
+
+<pre class="example">
+
+comm -23 &lt;(pacman -Qeq|sort) &lt;(pacman -Qmq|sort) &gt; pkglist
+sudo pacman -S $(&lt; pkglist)
+
+</pre>
+
+<p>
+arch的官方软件仓库中的软件已经足够丰富了，具有一定用户量的软件都会有。如果你要用的确实是一些非常冷门的软件而在官方仓库中无法找到，那就试一下AUR仓库，你有很大的可能会满意而归。这是一个由用户者们自行管理的软件仓库，拥有非常丰富的软件资源，而且它的软件包管理也极其方便有 yaourt这种和pacman命令参数兼容的工具来提供管理服务。
+</p>
+
+<p>
+arch的包管理还有一个很强大的优势就是镜像源多，更新速度极其快。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5b69f09" class="outline-3">
+<h3 id="org5b69f09">Wiki</h3>
+<div class="outline-text-3" id="text-org5b69f09">
+<p>
+arch还有一个对其他发行版的巨大优势就是极其非常完善的wiki，从系统的安装到应用的使用配置都有大量的wiki来进行指导，这也是为什么archlinux并不容易上手，但却有着庞大用户量的一个原因吧。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcc6c0b8" class="outline-2">
+<h2 id="orgcc6c0b8">arch之旅</h2>
+<div class="outline-text-2" id="text-orgcc6c0b8">
+<p>
+说到这，可能你对arch会开始感兴趣。不过如果要你使用它，你还是有一些抵触，因为你可能听说：
+</p>
+
+<p>
+Q1: archlinux很难安装， 不是那种很爱折腾的人最好不要使用。
+</p>
+
+<p>
+A1: archlinux的安装虽然不像ubuntu那样傻瓜式的简单， 但只要你按照官方的<a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank" rel="noopener">安装wiki</a> 的步骤一步步来，也并不难，只是需要点耐心了。当然如果你是和我一样的windows双系统使用者, 你还需要在安装启动引导前安装os-prober即可。
+</p>
+
+<p>
+Q2: archlinux是滚动升级版本并且很容易滚挂。
+</p>
+
+<p>
+A2: archlinux是滚动更新的， 如果用户平时不注意维护是很容易滚挂的，但是如果你是一个有心人，平时注意定期<a href="https://wiki.archlinux.org/index.php/System_maintenance_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener">维护</a> 和<a href="https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener">备份</a> ，并且在你每次更新系统前留意<a href="https://www.archlinux.org/feeds/news/" target="_blank" rel="noopener">archlinux新闻</a> 的话, 并不需要担心滚挂的问题。网上也有很多人，安装了一次后可以用上很多年，比ubuntu LTS版用的还长。
+</p>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/archlinux/" rel="tag"># archlinux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/blog/2016-09-24-2016-09-24-配置支持中文输入的emacsclient.html" rel="next" title="配置支持中文输入的emacsclient">
+      配置支持中文输入的emacsclient <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#org8dc22b0"><span class="nav-number">1.</span> <span class="nav-text">为什么选择archlinux?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#org3e82e27"><span class="nav-number">1.1.</span> <span class="nav-text">简洁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgbfc2af1"><span class="nav-number">1.2.</span> <span class="nav-text">包管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#org5b69f09"><span class="nav-number">1.3.</span> <span class="nav-text">Wiki</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgcc6c0b8"><span class="nav-number">2.</span> <span class="nav-text">arch之旅</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Green"
+      src="/img/author.png">
+  <p class="site-author-name" itemprop="name">Green</p>
+  <div class="site-description" itemprop="description">Abracadabra</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

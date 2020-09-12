@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"summerisgreen.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="部分和问题   在算法中，有一类常见的问题被称为部分和问题。 在这类问题中，你需要判断是否能够使用给定数组中的部分数，通过累加获得所要获得的目标和。 而对于每个候选数字，在有些题目中你只能使用一次，而在另一些题目中则可以多次使用。 在后面我们会看到，这两种情况都可以使用动态规划方法来求解，只不过具体的求解思路会有一些不同。     Partition Equal Subset Sum   Gi">
+<meta name="keywords" content="编程技巧,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法技巧-使用动态规划求解部分和问题">
+<meta property="og:url" content="http://summerisgreen.com/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html">
+<meta property="og:site_name" content="Summer is Green">
+<meta property="og:description" content="部分和问题   在算法中，有一类常见的问题被称为部分和问题。 在这类问题中，你需要判断是否能够使用给定数组中的部分数，通过累加获得所要获得的目标和。 而对于每个候选数字，在有些题目中你只能使用一次，而在另一些题目中则可以多次使用。 在后面我们会看到，这两种情况都可以使用动态规划方法来求解，只不过具体的求解思路会有一些不同。     Partition Equal Subset Sum   Gi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-14T23:44:29.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法技巧-使用动态规划求解部分和问题">
+<meta name="twitter:description" content="部分和问题   在算法中，有一类常见的问题被称为部分和问题。 在这类问题中，你需要判断是否能够使用给定数组中的部分数，通过累加获得所要获得的目标和。 而对于每个候选数字，在有些题目中你只能使用一次，而在另一些题目中则可以多次使用。 在后面我们会看到，这两种情况都可以使用动态规划方法来求解，只不过具体的求解思路会有一些不同。     Partition Equal Subset Sum   Gi">
+
+<link rel="canonical" href="http://summerisgreen.com/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>算法技巧-使用动态规划求解部分和问题 | Summer is Green</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Summer is Green</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">a blog for writing and thinking</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://summerisgreen.com/blog/2017-07-28-2017-07-28-算法技巧-使用动态规划求解部分和问题.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/author.png">
+      <meta itemprop="name" content="Green">
+      <meta itemprop="description" content="Abracadabra">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Summer is Green">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法技巧-使用动态规划求解部分和问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-07-28 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-28T00:00:00+08:00">2017-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-03-15 07:44:29" itemprop="dateModified" datetime="2019-03-15T07:44:29+08:00">2019-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程技巧/" itemprop="url" rel="index"><span itemprop="name">编程技巧</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        
+<div id="outline-container-org58b574a" class="outline-2">
+<h2 id="org58b574a">部分和问题</h2>
+<div class="outline-text-2" id="text-org58b574a">
+<p>
+在算法中，有一类常见的问题被称为部分和问题。
+在这类问题中，你需要判断是否能够使用给定数组中的部分数，通过累加获得所要获得的目标和。
+而对于每个候选数字，在有些题目中你只能使用一次，而在另一些题目中则可以多次使用。
+在后面我们会看到，这两种情况都可以使用动态规划方法来求解，只不过具体的求解思路会有一些不同。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb0ee185" class="outline-2">
+<h2 id="orgb0ee185">Partition Equal Subset Sum</h2>
+<div class="outline-text-2" id="text-orgb0ee185">
+<pre class="example">
+Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+</pre>
+
+<p>
+为了解决这个问题，首先假设我们将集合 nums 分成了满足条件的 A 和 B 这两个子集合，它们必然满足下面两个条件：
+</p>
+
+<p>
+sum(A) = sum(B)
+sum(A) + sum(B) = sum(nums)
+</p>
+
+<p>
+使用前一个公式将后一个等式中的B替换为A，可得：
+</p>
+
+<p>
+sum(A) = sum(nums)/2 
+</p>
+
+<p>
+我们可以发现，这道题已经转化成了我们之前所讨论的部分和的问题了。
+</p>
+
+<p>
+现在我们所要求解的是：是否能够从一个给定的数的集合选出一个子集合，这个子集合中元素的和为该集合中全部元素和的一半。
+当然如果整个集合中所有元素的和为奇数的话，这个子集合肯定不存在。可以对这个条件提前进行判断，以减少不必要的计算。
+</p>
+
+<p>
+如果整个集合中所有元素的和的一半为偶数的话，就需要使用动态规划方法来判断是否能够找到这样的子集合。
+为了使用动态规划方法，我们构造了一个数组称为 oldp，其表示对于已经遍历过的数字，是否能在它们中找到所有元素的和等于该索引值的子集合。
+</p>
+<ul class="org-ul">
+<li>初始化：在第一次迭代之前，只有索引为0的位置的值为True，其余均为False，条件为真。</li>
+<li>保持：当遍历第i个数时，当且仅当j之前就能被部分和所表示或者j-i能被表示时，该遍历完成后j能被表示。</li>
+<li>终止：oldp 中各个索引的值表示是否能用所给的数组的部分和来表示。</li>
+</ul>
+
+<p>
+因此在完成所有数值的循环后，只需要查看索引为 half 的 oldp 即可知道是否能将整个数组分为两个元素和相等的集合。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">canPartition</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :rtype: bool</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">sums</span> = <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> sums % <span style="color: #a45bad;">2</span> == <span style="color: #a45bad;">1</span>:
+        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+    <span style="color: #7590db;">half</span> = sums / <span style="color: #a45bad;">2</span>
+    <span style="color: #7590db;">oldp</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">False</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>half + <span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">oldp</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">True</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>half, i-<span style="color: #a45bad;">1</span>, -<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">oldp</span><span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> = oldp<span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> <span style="color: #4f97d7; font-weight: bold;">or</span> oldp<span style="color: #4f97d7;">[</span>j-i<span style="color: #4f97d7;">]</span>
+
+    <span style="color: #4f97d7; font-weight: bold;">return</span> oldp<span style="color: #4f97d7;">[</span>half<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8bd4520" class="outline-2">
+<h2 id="org8bd4520">Target Sum</h2>
+<div class="outline-text-2" id="text-org8bd4520">
+<pre class="example">
+ You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
+
+Find out how many ways to assign symbols to make sum of integers equal to target S. 
+</pre>
+
+<p>
+这道题目看起来和上一个题目相差很大，但是如果我们对题目所给的条件做一些适当的数学变化的话，
+就会发现这道题目本质上也是个部分和的问题。
+</p>
+
+<p>
+首先我们假设在这个集合中，正的子集合为P，负的为N。
+然后我们就可以使用这两个符号将题目所包含的关系给表示出来：
+</p>
+
+<p>
+sum(P) + sum(N) = sum(nums)
+</p>
+
+<p>
+sum(P) - sum(N) = S
+</p>
+
+<p>
+将这两个等式组合一下之后，我们可以发现该问题已经转换为部分和的问题了:
+</p>
+
+<p>
+sum(P) = (sum(nums) + S)/2
+</p>
+
+<p>
+这里一个比较大的不同就是：这个问题所求的是有多少种不同的部分和的结果和目标值相同，而上一题仅仅需要知道是否存在和目标值的部分和。
+所以在这里，我们的 dp 表示的是存在多少种不同的部分和可以表示该索引值，此时的内层递推公式也相应的改成了:
+</p>
+
+<p>
+dp[j] += dp[j-1]
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">findTargetSumWays</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums, S<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :type S: int</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">target</span> = <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> + S
+    <span style="color: #4f97d7; font-weight: bold;">if</span> S &gt; <span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>nums<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">or</span> target % <span style="color: #a45bad;">2</span>:
+        <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">0</span>
+    <span style="color: #4f97d7; font-weight: bold;">else</span>:
+        <span style="color: #7590db;">target</span> = target/<span style="color: #a45bad;">2</span>
+
+    <span style="color: #7590db;">dp</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">dp</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">reversed</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">range</span><span style="color: #bc6ec5;">(</span>i, target+<span style="color: #a45bad;">1</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
+            <span style="color: #7590db;">dp</span><span style="color: #4f97d7;">[</span>j<span style="color: #4f97d7;">]</span> += dp<span style="color: #4f97d7;">[</span>j-i<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> dp<span style="color: #4f97d7;">[</span>target<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf2a13b6" class="outline-2">
+<h2 id="orgf2a13b6">Combination Sum IV</h2>
+<div class="outline-text-2" id="text-orgf2a13b6">
+<pre class="example">
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+</pre>
+
+<p>
+需要注意的是，在这个题目中数组中的每个数字都可以使用多次，而不是像之前的题目所要求的只能使用一次。
+为了能够满足这个条件，我们可以从1开始一直到目标值，依次尝试是否能够使用数组中的数来累加到所尝试的索引值。
+因为数组中的数是大于等于1的，而我们对部分和目标值的搜索跨度为1，所以使用这种方法必定是不会错过数组集合中所有数值的任何一种可能的组合的。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">combinationSum4</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, nums, target<span style="color: #4f97d7;">)</span>:
+    <span style="color: #2aa1ae;">"""</span>
+<span style="color: #2aa1ae;">    :type nums: List[int]</span>
+<span style="color: #2aa1ae;">    :type target: int</span>
+<span style="color: #2aa1ae;">    :rtype: int</span>
+<span style="color: #2aa1ae;">    """</span>
+    <span style="color: #7590db;">d</span> = <span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> * <span style="color: #4f97d7;">(</span>target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #7590db;">d</span><span style="color: #4f97d7;">[</span><span style="color: #a45bad;">0</span><span style="color: #4f97d7;">]</span> = <span style="color: #a45bad;">1</span>
+    <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #a45bad;">1</span>,target+<span style="color: #a45bad;">1</span><span style="color: #4f97d7;">)</span>:
+        <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> nums:
+            <span style="color: #4f97d7; font-weight: bold;">if</span> i &gt;= j:
+                <span style="color: #7590db;">d</span><span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span> += d<span style="color: #4f97d7;">[</span>i-j<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> d<span style="color: #4f97d7;">[</span>target<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/编程技巧/" rel="tag"># 编程技巧</a>
+              <a href="/tags/算法/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2017-07-27-2017-07-27-算法技巧-使用动态规划解决地图路径类问题.html" rel="prev" title="算法技巧-使用动态规划解决地图路径类问题">
+      <i class="fa fa-chevron-left"></i> 算法技巧-使用动态规划解决地图路径类问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2018-04-24-2018-04-23-hadoop中mapper和reducer个数的设置.html" rel="next" title="Hadoop中的Mapper和Reducer数量设定">
+      Hadoop中的Mapper和Reducer数量设定 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#org58b574a"><span class="nav-number">1.</span> <span class="nav-text">部分和问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgb0ee185"><span class="nav-number">2.</span> <span class="nav-text">Partition Equal Subset Sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#org8bd4520"><span class="nav-number">3.</span> <span class="nav-text">Target Sum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orgf2a13b6"><span class="nav-number">4.</span> <span class="nav-text">Combination Sum IV</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Green"
+      src="/img/author.png">
+  <p class="site-author-name" itemprop="name">Green</p>
+  <div class="site-description" itemprop="description">Abracadabra</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Green</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
